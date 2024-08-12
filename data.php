@@ -1,7 +1,7 @@
 <?php
 
 $tableTitles = [
-	'number' => '№',
+	'number' => 1,
 	'name'   => 'Name',
 	'phone'  => 'Phone',
 	'email'  => 'Email',
@@ -11,7 +11,7 @@ $tableTitles = [
 
 $users = [
 	[
-		'number' => 1,
+		'id' => 1,
 		'name'   => 'Jo',
 		'phone'  => 89251485853,
 		'email'  => 'jo@mail.ru',
@@ -21,7 +21,7 @@ $users = [
 
 	],
 	[
-		'number' => 1,
+		'id' => 2,
 		'name'   => 'Jo',
 		'phone'  => 89251485853,
 		'email'  => 'jo@mail.ru',

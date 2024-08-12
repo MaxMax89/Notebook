@@ -1,8 +1,13 @@
-<? include "data.php"; ?>
+<? include "ajax/handler.php"; ?>
+
+
+<?$users = new Users();
+$usersData = $users->getUserData();
+;?>
 
 <section class="user_list_block">
 
-	<?include "inc/popaps.php";?>
+	<?include "inc/popups.php";?>
 
 	<div class="user_list_body">
         <div class="user_list_head">
@@ -10,12 +15,15 @@
         </div>
 		<table class="user_list_table">
             <tr class="user_list_tr_title">
-                <? foreach ($tableTitles as $title): ?>
+                <? foreach ($usersData as  $user): ?>
+                <? foreach ($user as $title => $item): ?>
                 <td><?=$title?></td>
+                <? endforeach;?>
+                <?break?>
                 <? endforeach; ?>
                 <td></td>
             </tr>
-			<? foreach($users as $user): ?>
+			<? foreach($usersData as $user): ?>
             <tr>
 				<? foreach($user as $item): ?>
                 <td><?=$item?></td>
@@ -27,6 +35,7 @@
 			<? endforeach;?>
         </table>
 	</div>
+
 
 
 </section>
