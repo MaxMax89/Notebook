@@ -32,9 +32,7 @@
         </table>
     </div>
 
-	<? echo '<pre>' ?>
-	<? var_dump($usersData); ?>
-	<? echo '<pre>' ?>
+
 
 
 </section>
