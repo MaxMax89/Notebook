@@ -3,12 +3,11 @@ $(function () {
     $(document).on("click", "#popup_form_close", closeForm);
 
 
-
     function closeForm() {
         $('.popups_inner').removeClass('active');
     }
 
-    function openForm(){
+    function openForm() {
         $('.popups_inner').addClass('active');
     }
 
