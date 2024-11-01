@@ -1,8 +1,25 @@
+<? include "config/db_config.php"; ?>
 <? include "classes/Users.php"; ?>
+<? include "classes/Db.php"; ?>
 
-<? ?>
-<? $usersData = Users::getObject(); ?>
+<!------- get to connect DB ------->
+
+<? $db = new Db($dbConfig); ?>
+
+<!------- get data from tables "users" and "statuses" ------->
+
+<? $data = $db->getData('SELECT *  FROM `users` LEFT JOIN `statuses` ON users.id_status = statuses.id'); ?>
+
+<!------- creating objects of the Users class ------->
+
+<? foreach ($data as $user) {
+	$users[] = new Users($user);
+} ?>
+
+
 <? $tableFields = ['name', 'phone', 'email', 'status', 'note'] ?>
+
+
 <section class="user_list_block">
 
 	<? include "inc/popups.php"; ?>
@@ -18,7 +35,7 @@
 				<? endforeach; ?>
                 <td></td>
             </tr>
-			<? foreach ($usersData as $user): ?>
+			<? foreach ($users as $user): ?>
                 <tr>
 					<? foreach ($tableFields as $fields): ?>
                         <td><?= $user->$fields; ?></td>
@@ -31,8 +48,6 @@
 			<? endforeach; ?>
         </table>
     </div>
-
-
 
 
 </section>
