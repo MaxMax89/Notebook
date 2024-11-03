@@ -11,7 +11,7 @@ class Db
 		return $data;
 	}
 
-	private function query($sql)
+	public function query($sql)
 	{
 		$this->stmt = $this->connect->prepare($sql);
 		$this->stmt->execute();

@@ -1,4 +1,6 @@
-<? $statuses = $db->getData("SELECT * FROM `statuses`"); ?>
+<? $statuses = ['отпуск', 'уволен','командировка']; ?>
+
+
 
 
 <div class="popups_inner">
@@ -12,7 +14,7 @@
             <input type="text" name="note">
             <select class="" id="select" name="dfd">
 				<? foreach ($statuses as $status): ?>
-                    <option value="<?= $status['status'] ?>" selected><?= $status['status'] ?></option>
+                    <option value="<?= $status ?>" selected><?= $status ?></option>
 				<? endforeach; ?>
             </select>
             <input class="popups_form_button" type="submit" name="note">

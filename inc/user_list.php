@@ -1,58 +1,92 @@
 <? include "config/db_config.php"; ?>
-<? include "classes/Users.php"; ?>
+<? include "classes/UsersController.php"; ?>
+<? include "classes/Validator.php"?>
 <? include "classes/Db.php"; ?>
+<? include "popups.php"; ?>
 
-<!------- get to connect DB ------->
+<? $data = [
+'name' => 'Константин',
+'email' => 'Kostya@mail.com',
+'id_status' => 3,
+'phone' => '165454844654',
+ 'note' => 'Прародителем текста-рыбы является известный "Lorem Ipsum" — латинский текст, ноги которого растут аж из 45 года до нашей эры'
+]; ?>
 
 <? $db = new Db($dbConfig); ?>
 
-<!------- get data from tables "users" and "statuses" ------->
+<? $validator = new Validator()?>
 
-<? $data = $db->getData('SELECT *  FROM `users` LEFT JOIN `statuses` ON users.id_status = statuses.id'); ?>
+<? $usersController = new UsersController($db, $validator); ?>
 
-<!------- creating objects of the Users class ------->
+<? $users = $usersController->getAllUsers() ?>
 
-<? foreach ($data as $user) {
-	$users[] = new Users($user);
-} ?>
+<?// $usersController->addUser($data);?>
 
 
-<? $tableFields = ['name', 'phone', 'email', 'status', 'note'] ?>
 
 
-<section class="user_list_block">
-
-	<? include "inc/popups.php"; ?>
-
-    <div class="user_list_body">
-        <div class="user_list_head">
-            <a class="user_list_button_add" href="#">ADD</a>
-        </div>
-        <table class="user_list_table">
-            <tr class="user_list_tr_title">
-				<? foreach ($tableFields as $fields): ?>
-                    <td><?= $fields ?></td>
-				<? endforeach; ?>
-                <td></td>
-            </tr>
-			<? foreach ($users as $user): ?>
-                <tr>
-					<? foreach ($tableFields as $fields): ?>
-                        <td><?= $user->$fields; ?></td>
-					<? endforeach; ?>
-                    <td class="user_list_td_edit"><a class="user_list_button_edit" id="<?= $user->id; ?>"
-                                                     href="#">edit</a>
-                        <a class="user_list_button_dell" id="<?= $user->id; ?>" href="#">delete</a>
-                    </td>
-                </tr>
-			<? endforeach; ?>
-        </table>
-    </div>
 
 
-</section>
+
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+    <tr>
+        <th>Name</th>
+        <th>Note</th>
+        <th>Status</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?foreach ($users as $user):?>
+    <tr>
+        <td>
+            <div class="d-flex align-items-center">
+                <img
+                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                        alt=""
+                        style="width: 45px; height: 45px"
+                        class="rounded-circle"
+                />
+                <div class="ms-3">
+                    <p class="fw-bold mb-1"><?=$user['name']?></p>
+                    <p class="text-muted mb-0"><?=$user['email']?></p>
+                </div>
+            </div>
+        </td>
+        <td>
+            <p class="fw-normal mb-1"><?=$user['note']?></p>
+        </td>
+        <td>
+            <span class="badge badge-success rounded-pill d-inline"><?=$user['status']?></span>
+        </td>
+        <td><?=$user['phone']?></td>
+        <td>
+            <button type="button" class="btn btn-link btn-sm btn-rounded">
+                Edit
+            </button>
+            <button type="button" class="btn btn-link btn-sm btn-rounded">
+                Delete
+            </button>
+        </td>
+    </tr>
+    <? endforeach;?>
+    </tbody>
+</table>
+<div class="d-grid gap-2 col-6 mx-auto">
+    <button class="btn btn-primary user_list_button_add" type="button" data-mdb-ripple-init>ADD</button>
+</div>
 
 
+
+
+
+<? function debug($data){
+    echo '<pre>';
+    print_r($data);
+	echo '<pre>';
+}?>
 
 
 

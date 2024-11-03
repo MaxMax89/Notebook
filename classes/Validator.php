@@ -5,17 +5,43 @@ class Validator
 {
 	protected $errors = [];
 	protected $rolesList = ['required', 'max', 'email'];
-	public $message = [];
+	public $message = [
+		'required' => 'Поле :fieldname: не должно быть пустым',
+		'max' => 'Поле :fieldname: не может быть больше :rulevalue: символов',
+		'email' => 'Введите корректный email'
+	];
+	protected $rules = [
+		'name' => [
+		'required' => true,
+		'max' => 20
+	    ],
+		'phone' => [
+			'required' => true,
+			'max' => 20
+		],
+		'email' => [
+			'email' => true,
+			'max' => 20
+		],
+		'id_status' => [
+			'required' => true,
+			'max' => 20
+		],
+		'note' => [
+			'required' => true,
+			'max' => 130
+		]
+	];
 
 
-	public function validate($data = [], $rules = [])
+	public function validate($data = [])
 	{
 		foreach ($data as $fieldName => $value) {
-			if (in_array($fieldName, array_keys($rules))) {
+			if (in_array($fieldName, array_keys($this->rules))) {
 				$this->check([
 					'fieldname' => $fieldName,
 					'value'     => $value,
-					'rules'     => $rules[$fieldName]
+					'rules'     => $this->rules[$fieldName]
 				]);
 			}
 		}
