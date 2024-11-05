@@ -5,11 +5,6 @@ class UsersController
 {
 	private $validator;
 	private $db;
-	private $name;
-	private $phone;
-	private $email;
-	private $status;
-	private $note;
 
 
 	public function __construct($db, $validator)
@@ -24,12 +19,15 @@ class UsersController
 	}
 
 	public function removeUser($id){
-		$this->db->query('DELETE FROM `users` WHERE `id` = '.$id.'');
+		$this->db->query('DELETE FROM `users` WHERE `id` = ' . $id . '');
+	}
+
+	public function getStatuses(){
+		return $this->db->getData('SELECT * FROM `statuses`');
 	}
 
 	public function addUser($data){
 		$validation = $this->validator->validate($data);
-		var_dump($validation->getErrors());
 		if ($validation->hasErrors() == false){
 			$this->db->query("INSERT INTO `users` 
     						( `id`,`name`, `phone`, `email`, `id_status`, `note`) 

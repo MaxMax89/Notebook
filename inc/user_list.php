@@ -1,26 +1,28 @@
 <? include "config/db_config.php"; ?>
 <? include "classes/UsersController.php"; ?>
-<? include "classes/Validator.php"?>
+<? include "classes/Validator.php" ?>
 <? include "classes/Db.php"; ?>
-<? include "popups.php"; ?>
+<? include "debuging.php"; ?>
 
-<? $data = [
-'name' => 'Константин',
-'email' => 'Kostya@mail.com',
-'id_status' => 3,
-'phone' => '165454844654',
- 'note' => 'Прародителем текста-рыбы является известный "Lorem Ipsum" — латинский текст, ноги которого растут аж из 45 года до нашей эры'
-]; ?>
+
+
+
+
+
 
 <? $db = new Db($dbConfig); ?>
 
-<? $validator = new Validator()?>
+<? $validator = new Validator() ?>
 
 <? $usersController = new UsersController($db, $validator); ?>
 
+<? include "popups.php"; ?>
+
 <? $users = $usersController->getAllUsers() ?>
 
-<?// $usersController->addUser($data);?>
+
+
+
 
 
 
@@ -39,39 +41,39 @@
     </tr>
     </thead>
     <tbody>
-    <?foreach ($users as $user):?>
-    <tr>
-        <td>
-            <div class="d-flex align-items-center">
-                <img
-                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                        alt=""
-                        style="width: 45px; height: 45px"
-                        class="rounded-circle"
-                />
-                <div class="ms-3">
-                    <p class="fw-bold mb-1"><?=$user['name']?></p>
-                    <p class="text-muted mb-0"><?=$user['email']?></p>
+	<? foreach ($users as $user): ?>
+        <tr id="<?= $user['id'] ?>">
+            <td>
+                <div class="d-flex align-items-center">
+                    <img
+                            src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                            alt=""
+                            style="width: 45px; height: 45px"
+                            class="rounded-circle"
+                    >
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1"><?= $user['name'] ?></p>
+                        <p class="text-muted mb-0"><?= $user['email'] ?></p>
+                    </div>
                 </div>
-            </div>
-        </td>
-        <td>
-            <p class="fw-normal mb-1"><?=$user['note']?></p>
-        </td>
-        <td>
-            <span class="badge badge-success rounded-pill d-inline"><?=$user['status']?></span>
-        </td>
-        <td><?=$user['phone']?></td>
-        <td>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
-                Edit
-            </button>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
-                Delete
-            </button>
-        </td>
-    </tr>
-    <? endforeach;?>
+            </td>
+            <td>
+                <p class="fw-normal mb-1"><?= $user['note'] ?></p>
+            </td>
+            <td>
+                <span class="badge badge-success rounded-pill d-inline"><?= $user['status'] ?></span>
+            </td>
+            <td><?= $user['phone'] ?></td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded btn_edit" id="<?= $user['id'] ?>">
+                    Edit
+                </button>
+                <button type="submit" class="btn btn-link btn-sm btn-rounded btn_remove" id="<?= $user['id'] ?>">
+                    Delete
+                </button>
+            </td>
+        </tr>
+	<? endforeach; ?>
     </tbody>
 </table>
 <div class="d-grid gap-2 col-6 mx-auto">
@@ -79,14 +81,9 @@
 </div>
 
 
+<?debug($_POST); ?>
 
 
-
-<? function debug($data){
-    echo '<pre>';
-    print_r($data);
-	echo '<pre>';
-}?>
 
 
 
