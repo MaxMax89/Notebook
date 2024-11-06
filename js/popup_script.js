@@ -1,4 +1,8 @@
 $(function () {
+
+    let form = '.popups_form'
+
+
     $(document).on("click", ".user_list_button_add", openForm);
     $(document).on("click", "#popup_form_close", closeForm);
 

@@ -7,7 +7,7 @@ $(function () {
 
 
     $(document).on('click', btnRemove, removeUser);
-    $(document).on('submit', form, formSend)
+    //$(document).on('click', btnAdd, formSend)
 
 
 
@@ -15,9 +15,7 @@ $(function () {
 
     //////// FUNCTIONS //////////
 
-    function formSend(e){
-        e.preventDefault();
-    }
+
 
     function removeUser() {
         let user = $(this).attr('id');

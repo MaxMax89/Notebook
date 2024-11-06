@@ -64,3 +64,7 @@
     top: 0;
     left: 0;
 }
+
+label.error {
+    color: red;
+}
