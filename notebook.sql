@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 03 2024 г., 15:29
+-- Время создания: Ноя 09 2024 г., 13:58
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -61,11 +61,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `email`, `id_status`, `note`) VALUES
-(2, 'Святослав', '999555675', 'svyat@mail.ru', 1, 'А ещё предприниматели в сети интернет функционально разнесены на независимые элементы. Также как перспективное планирование'),
-(3, 'Кирилл', '58515414', 'Kir@gmail.com', 1, 'Давайте не будем укрепляться в мысли, что ночь оказалась долгой'),
-(4, 'Петр', '125898774', 'зуек@mail.ru', 2, 'начимость этих проблем настолько очевидна, что внедрение современных методик способствует повышению качества поэтапного и последовательного'),
-(5, 'Константин', '165454844654', 'Kostya@mail.com', 3, 'Прародителем текста-рыбы является известный \"Lorem Ipsum\" — латинский текст, ноги которого растут аж из 45 года до нашей эры'),
-(6, 'Константин', '165454844654', 'Kostya@mail.com', 3, 'Прародителем текста-рыбы является известный \"Lorem Ipsum\" — латинский текст, ноги которого растут аж из 45 года до нашей эры');
+(22, 'Константин', '165454844654', 'Kostya@mail.com', 3, 'Прародителем текста-рыбы является известный \"Lorem Ipsum\" — латинский текст, ноги которого растут аж из 45 года до нашей эры'),
+(53, 'Петр', '89059999999', 'petruh@mail.ru', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt whdfjwod lkjdbovijdb '),
+(111, 'Александр', '+7(925)-186-5805', 'Alexandr@gmail.com', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor gg ggggggg'),
+(113, 'Кирилл', '+7(890)-574-5162', 'Kirill@mail.ru', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod gg gg'),
+(125, 'Максим', '+7(925)-186-5805', 'chip_pro89@mail.com', 2, 'dsgdsagagdgag');
 
 --
 -- Индексы сохранённых таблиц
@@ -99,7 +99,7 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

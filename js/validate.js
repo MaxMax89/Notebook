@@ -1,29 +1,50 @@
-
-$('.popups_form').validate({
+$('form').validate({
     rules: {
-        name:{
+        name: {
             required: true,
-            maxlength: 20
+            maxlength: 50
         },
-        email:{
+        email: {
             required: true,
-            maxlength: 20,
+            maxlength: 50,
             email: true
         },
-        phone:{
+
+        id_status: {
             required: true,
-            maxlength: 20,
+            maxlength: 50
         },
-        id_status:{
-            required: true,
-            maxlength: 20
-        },
-        note:{
+        note: {
             required: true,
             maxlength: 130
         }
     },
-
-
+    messages: {
+        name: {
+            required: "Поле обязательно для заполнения",
+            maxlength: "Максимум {0} символов"
+        },
+        email: {
+            required: "Поле обязательно для заполнения",
+            maxlength: "Максимум {0} символов",
+            email: "неверный адрес эллектронной почты"
+        },
+        phone: {
+            required: "Поле обязательно для заполнения",
+            maxlength: "Максимум {0} символов",
+            checkMask: "Введен не верный номер телефона"
+        },
+        id_status: {
+            required: "Поле обязательно для заполнения",
+            maxlength: "Максимум {0} символов"
+        },
+        note: {
+            required: "Поле обязательно для заполнения",
+            maxlength: "Максимум {0} символов"
+        }
+    }
 
 });
+
+
+

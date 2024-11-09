@@ -12,20 +12,20 @@ class Validator
 	];
 	protected $rules = [
 		'name' => [
-		'required' => true,
-		'max' => 20
-	    ],
+			'required' => true,
+			'max' => 50
+		],
 		'phone' => [
 			'required' => true,
-			'max' => 20
+			'max' => 30
 		],
 		'email' => [
 			'email' => true,
-			'max' => 20
+			'max' => 50
 		],
 		'id_status' => [
 			'required' => true,
-			'max' => 20
+			'max' => 50
 		],
 		'note' => [
 			'required' => true,
@@ -40,8 +40,8 @@ class Validator
 			if (in_array($fieldName, array_keys($this->rules))) {
 				$this->check([
 					'fieldname' => $fieldName,
-					'value'     => $value,
-					'rules'     => $this->rules[$fieldName]
+					'value' => $value,
+					'rules' => $this->rules[$fieldName]
 				]);
 			}
 		}

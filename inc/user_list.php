@@ -6,10 +6,6 @@
 
 
 
-
-
-
-
 <? $db = new Db($dbConfig); ?>
 
 <? $validator = new Validator() ?>
@@ -19,15 +15,6 @@
 <? include "popups.php"; ?>
 
 <? $users = $usersController->getAllUsers() ?>
-
-
-
-
-
-
-
-
-
 
 
 <table class="table align-middle mb-0 bg-white">
@@ -65,9 +52,10 @@
             </td>
             <td><?= $user['phone'] ?></td>
             <td>
-                <button type="button" class="btn btn-link btn-sm btn-rounded btn_edit" id="<?= $user['id'] ?>">
+                <a href="../page_update.php?id=<?= $user['id'] ?>" class="btn btn-link btn-sm btn-rounded btn_edit"
+                   id="<?= $user['id'] ?>">
                     Edit
-                </button>
+                </a>
                 <button type="submit" class="btn btn-link btn-sm btn-rounded btn_remove" id="<?= $user['id'] ?>">
                     Delete
                 </button>
@@ -81,7 +69,7 @@
 </div>
 
 
-<?debug($_POST); ?>
+
 
 
 
