@@ -21,6 +21,11 @@ if ($_GET['cmd'] == 'rmuser') {
 	$usersController->removeUser($userId);
 }
 
+if ($_GET['cmd'] == 'edit_user') {
+
+}
+$data = $usersController->getAllUsers();
+echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
 
 

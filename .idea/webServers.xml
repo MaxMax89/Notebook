@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a3d650d4-c076-4bec-bc17-656c5d247027" name="max">
+        <fileTransfer rootFolder="/var/www/maks_exods/data/www/maks.exods.su/max" accessType="SFTP" host="maks.exods.su" port="3339" sshConfigId="810ad24a-c68e-46e0-a07e-a7e252c8ed04" sshConfig="maks_exods@maks.exods.su:3339 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

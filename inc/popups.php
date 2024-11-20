@@ -1,4 +1,4 @@
-<? $statuses = $usersController->getStatuses(); ?>
+
 
 
 <div class="popups_inner">

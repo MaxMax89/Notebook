@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="maks.exods.su" id="810ad24a-c68e-46e0-a07e-a7e252c8ed04" port="3339" nameFormat="DESCRIPTIVE" username="maks_exods" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

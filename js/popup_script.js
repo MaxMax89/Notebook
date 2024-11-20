@@ -3,14 +3,15 @@ $(function () {
 
     $(document).on("click", ".user_list_button_add", openForm);
     $(document).on("click", "#popup_form_close", closeForm);
+    $(document).on("click", ".btn_edit", openForm)
 
 
     function closeForm() {
-        $('.popups_inner').removeClass('active');
+        $('.notebook_form').removeClass('active');
     }
 
     function openForm() {
-        $('.popups_inner').addClass('active');
+        $('.notebook_form').toggleClass('active');
     }
 
 });
