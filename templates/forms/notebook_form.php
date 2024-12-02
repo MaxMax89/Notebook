@@ -39,17 +39,14 @@
                 <? endforeach; ?>
             </select>
         </div>
+        <div class="popup_remove_links">
         <button type="submit" class="btn btn-primary btn_form" name="add_user">СОХРАНИТЬ</button>
+        <a  class="btn btn-primary btn_red" href="">ЗАКРЫТЬ</a>
+        </div>
     </form>
 </div>
 
-<?if (isset($_POST['add_user'])) {
-$usersController->addUser($_POST);
-header("location: /");
-}
 
-if (isset($_POST['update_user'])) {
-$usersController->updateUser($_POST);
-header("location: /");
-}
-?>
+
+
+

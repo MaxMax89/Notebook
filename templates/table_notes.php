@@ -48,7 +48,8 @@
                                 </g>
                             </svg>
                         </a>
-                        <a type="submit" class="btn btn-link btn-sm btn-rounded btn_remove" id="<?= $user['id'] ?>">
+                        <a type="submit" class="btn btn-link btn-sm btn-rounded table_notes_btn_remove"
+                           id="<?= $user['id'] ?>">
                             <svg class="table_notes_delete_icon" xmlns="http://www.w3.org/2000/svg" fill="#CC1013FF"
                                  width="64px" height="64px" viewBox="0 0 24 24">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

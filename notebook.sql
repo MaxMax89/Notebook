@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 09 2024 г., 13:58
+-- Время создания: Дек 02 2024 г., 16:17
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -39,7 +39,8 @@ CREATE TABLE `statuses` (
 INSERT INTO `statuses` (`id_status`, `status`) VALUES
 (1, 'Командировка'),
 (2, 'Отпуск'),
-(3, 'Уволен');
+(3, 'Уволен'),
+(4, 'Декрет');
 
 -- --------------------------------------------------------
 
@@ -61,11 +62,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `email`, `id_status`, `note`) VALUES
-(22, 'Константин', '165454844654', 'Kostya@mail.com', 3, 'Прародителем текста-рыбы является известный \"Lorem Ipsum\" — латинский текст, ноги которого растут аж из 45 года до нашей эры'),
-(53, 'Петр', '89059999999', 'petruh@mail.ru', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt whdfjwod lkjdbovijdb '),
-(111, 'Александр', '+7(925)-186-5805', 'Alexandr@gmail.com', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor gg ggggggg'),
-(113, 'Кирилл', '+7(890)-574-5162', 'Kirill@mail.ru', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod gg gg'),
-(125, 'Максим', '+7(925)-186-5805', 'chip_pro89@mail.com', 2, 'dsgdsagagdgag');
+(187, 'Николай', '+7(795)-558-4855', 'nikol@gmail.com', 1, ' Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения'),
+(206, 'Николай', '+7(779)-555-8485', 'nikol@gmail.com', 1, 'Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения'),
+(208, 'Петр', '+7(965)-141-9515', 'Petr@gmail.ru', 1, 'Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения'),
+(225, 'Николай', '+7(777)-955-5848', 'nikol@gmail.com', 2, 'Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения'),
+(226, 'Кирилл', '+7(965)-212-5879', 'Kir@mail.com', 2, 'Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения'),
+(227, 'Ирина', '+7(906)-158-4875', 'Iren@mail.ru', 4, 'Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения'),
+(230, 'Петр', '+7(796)-514-1951', 'Petr@gmail.ru', 1, 'Идейные соображения высшего порядка, а также укрепление и развитие структуры требуют определения');
 
 --
 -- Индексы сохранённых таблиц
@@ -93,13 +96,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id_status` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_status` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=231;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

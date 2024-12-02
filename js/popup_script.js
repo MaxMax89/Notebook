@@ -1,9 +1,13 @@
 $(function () {
 
+    let linkCloseForm = '#popup_form_close';
+    let btnAdd = '.user_list_button_add';
+    let btnEdit = '.btn_edit';
 
-    $(document).on("click", ".user_list_button_add", openForm);
-    $(document).on("click", "#popup_form_close", closeForm);
-    $(document).on("click", ".btn_edit", openForm)
+
+    $(document).on("click", btnAdd, openForm);
+    $(document).on("click", linkCloseForm, closeForm);
+    $(document).on("click", btnEdit , openForm)
 
 
     function closeForm() {

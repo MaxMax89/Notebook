@@ -1,20 +1,10 @@
-
-
-<!-- Модальное окно -->
-<div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-			</div>
-			<div class="modal-body">
-				...
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-				<button type="button" class="btn btn-primary">Сохранить изменения</button>
-			</div>
-		</div>
-	</div>
+<div class="popup_remove_confirm">
+    <a class="popup_form_close" id="popup_form_close" href="/"></a>
+    <div class="popup_remove_body">
+        <h4 class="popup_remove_title">удалить заметку?</h4>
+        <div class="popup_remove_links">
+            <a class="btn btn-primary btn_remove_cancel">ОТМЕНА</a>
+            <a class="btn btn-primary btn_red btn_remove_confirm">УДАЛИТЬ</a>
+        </div>
+    </div>
 </div>
