@@ -14,18 +14,37 @@ $validator = new Validator();
 $usersController = new UsersController($db, $validator);
 
 
-$userId = $_GET['user'];
 
 
-if ($_GET['cmd'] == 'rmuser') {
+if($_POST['cmd'] == 'open_form'){
+	$_POST['statuses'] = $usersController->getStatuses();
+	//echo json_encode($statuses, JSON_UNESCAPED_UNICODE);
+}
+
+
+if ($_POST['cmd'] == 'delete_user') {
 	$usersController->removeUser($userId);
 }
 
-if ($_GET['cmd'] == 'edit_user') {
-
+if ($_POST['cmd'] == 'open_update_form') {
+	$data = $usersController->getUserById($_POST['id']);
+	echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
-$data = $usersController->getAllUsers();
-echo json_encode($data, JSON_UNESCAPED_UNICODE);
+
+if(isset($_POST['update_form'])){
+	$usersController->updateUser($_POST);
+	$data = $usersController->getUserById($_POST['id']);
+	echo json_encode($data, JSON_UNESCAPED_UNICODE);
+}
+
+if (isset($_POST['add_form'])) {
+	 $usersController->addUser($_POST);
+	 $user = $usersController->getLastUser();
+	 echo json_encode($user, JSON_UNESCAPED_UNICODE);
+}
+
+
+
 
 
 

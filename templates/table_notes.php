@@ -24,21 +24,21 @@
                                 class="rounded-circle"
                         >
                         <div class="ms-3">
-                            <p class="fw-bold mb-1 table_notes_td_name"><?= $user['name'] ?></p>
-                            <p class="text-muted mb-0"><?= $user['email'] ?></p>
+                            <p id="name" class="fw-bold mb-1 table_notes_td_name"><?= $user['name'] ?></p>
+                            <p id="email" class="text-muted mb-0"><?= $user['email'] ?></p>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <p class="fw-normal mb-1 table_notes_td_note"><?= $user['note'] ?></p>
+                    <p id="note" class="fw-normal mb-1 table_notes_td_note"><?= $user['note'] ?></p>
                 </td>
                 <td>
-                    <span class="badge rounded-pill d-inline"><?= $user['status'] ?></span>
+                    <span id="status" class="badge rounded-pill d-inline"><?= $user['status'] ?></span>
                 </td>
-                <td class="table_notes_td_phone"><?= $user['phone'] ?></td>
+                <td id="phone" class="table_notes_td_phone"><?= $user['phone'] ?></td>
                 <td class="user_list_td_action">
                     <div class="user_list_linc_container">
-                        <a class=" btn btn-link btn-sm btn-rounded btn_edit" id="<?= $user['id'] ?>">
+                        <a class=" btn btn-link btn-sm btn-rounded btn_update" id="<?= $user['id'] ?>">
                             <svg fill="#3B71CAFF" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
                                  class="icon table_notes_delete_icon" stroke="#3B71CAFF">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -66,4 +66,7 @@
 		<? endforeach; ?>
         </tbody>
     </table>
+    <div class="block_form"></div>
 </div>
+
+

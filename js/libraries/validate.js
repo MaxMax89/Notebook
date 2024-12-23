@@ -1,4 +1,4 @@
-$('form').validate({
+$('.notebook_form_add').validate({
     rules: {
         name: {
             required: true,

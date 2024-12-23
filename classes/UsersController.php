@@ -13,9 +13,31 @@ class UsersController
 		$this->validator = $validator;
 	}
 
+	public function getLastUser(){
+		return $this->db->getData('SELECT *  FROM `users`  LEFT JOIN `statuses` ON users.id_status = statuses.id_status  ORDER BY ID DESC LIMIT 1');
+	}
+
+	public function getDataTpl()
+	{
+		$users = self::getAllUsers();
+		$statuses = self::getStatuses();
+		foreach ($users as $user) {
+			$DATA_TPL[] = [
+				'id' => $user['id'],
+				'name' => $user['name'],
+				'phone' => $user['phone'],
+				'email' => $user['email'],
+				'status' => $statuses[$user['id_status']],
+				'note' => $user['note']
+
+			];
+		}
+		return $DATA_TPL;
+	}
+
 	public function getAllUsers()
 	{
-		return $this->db->getData('SELECT *  FROM `users` LEFT JOIN `statuses` ON users.id_status = statuses.id_status');
+		return $this->db->getData('SELECT *  FROM `users`');
 	}
 
 	public function removeUser($id)
@@ -25,7 +47,11 @@ class UsersController
 
 	public function getStatuses()
 	{
-		return $this->db->getData('SELECT * FROM `statuses`');
+		$result = $this->db->getData('SELECT * FROM `statuses`');
+		foreach ($result as $row){
+			$statuses[$row['id_status']] = $row['status'];
+		}
+		return $statuses;
 	}
 
 	public function addUser($data)

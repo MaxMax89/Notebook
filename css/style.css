@@ -1,3 +1,7 @@
+html {
+    margin-right: calc(-1 * (100vw - 100%));
+}
+
 .container {
     max-width: 60%;
 }
@@ -49,7 +53,11 @@ td.table_notes_td_phone {
     height: 100% ;
 }
 
-.notebook_form {
+.notebook_form_container {
+
+}
+
+.notebook_form_body {
     width: 20%;
     height: 100%;
     padding: 0 30px;
@@ -63,9 +71,23 @@ td.table_notes_td_phone {
 
 }
 
-.notebook_form.active {
+.notebook_form_body.active {
     right: 0;
     transition: all 0.3s ease 0s;
+}
+
+.link_form_close {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.notebook_form_close {
+    cursor: pointer;
 }
 
 .form-control{
@@ -156,6 +178,7 @@ td.table_notes_td_phone {
     position: absolute;
     top: 0;
     left: 0;
+    cursor: pointer;
 }
 
 label.error {
