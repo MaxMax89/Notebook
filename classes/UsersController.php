@@ -17,12 +17,12 @@ class UsersController
 		return $this->db->getData('SELECT *  FROM `users`  LEFT JOIN `statuses` ON users.id_status = statuses.id_status  ORDER BY ID DESC LIMIT 1');
 	}
 
-	public function getDataTpl()
+	public function getDataUsers()
 	{
 		$users = self::getAllUsers();
 		$statuses = self::getStatuses();
 		foreach ($users as $user) {
-			$DATA_TPL[] = [
+			$DATA_USERS[] = [
 				'id' => $user['id'],
 				'name' => $user['name'],
 				'phone' => $user['phone'],
@@ -32,7 +32,7 @@ class UsersController
 
 			];
 		}
-		return $DATA_TPL;
+		return $DATA_USERS;
 	}
 
 	public function getAllUsers()

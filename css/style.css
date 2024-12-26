@@ -1,5 +1,6 @@
 html {
     margin-right: calc(-1 * (100vw - 100%));
+    overflow-x: hidden;
 }
 
 .container {
@@ -14,7 +15,7 @@ html {
     background: #CC1013FF;
 }
 
-.user_list_add_wrapper{
+.user_list_add_wrapper {
     display: flex;
 
 }
@@ -26,7 +27,7 @@ html {
     margin: 15px 0;
 }
 
-td.user_list_td_action{
+td.user_list_td_action {
     min-width: 173px;
 }
 
@@ -38,23 +39,23 @@ td.table_notes_td_phone {
     min-width: 160px;
 }
 
-.notebook_form_header{
+.notebook_form_header {
     display: flex;
     justify-content: flex-end;
     margin: 15px 0 0 0;
 }
 
-.notebook_form_close svg{
+.notebook_form_close img {
     width: 30px;
 }
 
-.table_notes_delete_icon{
+.table_notes_delete_icon {
     width: 30px;
-    height: 100% ;
+    height: 100%;
 }
 
-.notebook_form_container {
-
+.btn_update img {
+    width: 30px;
 }
 
 .notebook_form_body {
@@ -90,7 +91,7 @@ td.table_notes_td_phone {
     cursor: pointer;
 }
 
-.form-control{
+.form-control {
     border: none;
     border-bottom: 1px solid #E0E0E0FF;
 }
@@ -105,10 +106,8 @@ td.table_notes_td_phone {
     color: #4F4F4FFF;
 }
 
-.popup_remove_confirm {
-    display: none;
-}
-.popup_remove_confirm.active {
+
+.popup_delete_confirm {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
@@ -118,7 +117,7 @@ td.table_notes_td_phone {
     justify-content: center;
 }
 
-.popup_remove_body {
+.popup_delete_body {
     background: white;
     width: 360px;
     height: 160px;
@@ -130,16 +129,24 @@ td.table_notes_td_phone {
     border-radius: 5px;
 }
 
-.popup_remove_title {
+.popup_delete_title {
     padding: 15px;
     text-align: center;
 
 }
 
-.popup_remove_links {
+.popup_delete_links {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    margin-top: 30px;
+}
+
+.notebook_form_links {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
 }
 
 .popups_form {
@@ -149,7 +156,7 @@ td.table_notes_td_phone {
     margin: auto auto;
 }
 
-.popups_form input{
+.popups_form input {
     border: 3px solid #4C68CC;
     height: 37px;
 }
@@ -163,7 +170,7 @@ td.table_notes_td_phone {
     border: none;
 }
 
-.popups_form_close_icon{
+.popups_form_close_icon {
     position: absolute;
     top: 0;
     right: 3px;
@@ -189,4 +196,9 @@ label.error {
 .badge {
     color: black;
     font-size: 12px;
+}
+
+#popup_delete {
+    width: 100%;
+    height: 100%;
 }
