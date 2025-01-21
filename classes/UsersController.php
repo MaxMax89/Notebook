@@ -3,14 +3,13 @@
 
 class UsersController
 {
-	private $validator;
+	public $validator;
 	private $db;
 
 
-	public function __construct($db, $validator)
+	public function __construct($db)
 	{
 		$this->db = $db;
-		$this->validator = $validator;
 	}
 
 	public function getLastUser(){
@@ -27,6 +26,7 @@ class UsersController
 				'name' => $user['name'],
 				'phone' => $user['phone'],
 				'email' => $user['email'],
+				'id_status' => $user['id_status'],
 				'status' => $statuses[$user['id_status']],
 				'note' => $user['note']
 

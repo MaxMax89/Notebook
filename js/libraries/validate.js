@@ -1,5 +1,10 @@
-$('.notebook_form_add').validate({
+function validateForm(){
+$('form').validate({
     rules: {
+        phone: {
+            required: true,
+            maxlength: 50
+        },
         name: {
             required: true,
             maxlength: 50
@@ -45,6 +50,6 @@ $('.notebook_form_add').validate({
     }
 
 });
-
+}
 
 

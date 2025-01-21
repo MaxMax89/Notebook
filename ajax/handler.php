@@ -10,29 +10,46 @@ $db = new Db($dbConfig);
 
 $validator = new Validator();
 
-$usersController = new UsersController($db, $validator);
+$usersController = new UsersController($db);
+
+$usersController->validator = $validator;
+
 
 /////////// DELETE USER ////////////
 if ($_POST['cmd'] == 'delete_user') {
 	$userId = $_POST['id'];
 	$usersController->removeUser($userId);
-}
-/////////// OPEN UPDATE FORM ////////////
-if ($_POST['cmd'] == 'open_update_form') {
-	$data = $usersController->getUserById($_POST['id']);
+	$data = $usersController->getDataUsers();
 	echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
+
+/////////// OPEN ADD FORM ////////////
+if ($_POST['cmd'] == 'open_add_form') {
+	$statuses = $usersController->getStatuses();
+	$form = file_get_contents('../templates/forms/notebook_form_add.php');
+	echo json_encode(['form' => $form, 'statuses' => $statuses], JSON_UNESCAPED_UNICODE);
+}
+
+/////////// OPEN UPDATE FORM ////////////
+if ($_POST['cmd'] == 'open_update_form') {
+	$statuses = $usersController->getStatuses();
+	$form = file_get_contents('../templates/forms/notebook_form_update.php');
+	$data = $usersController->getUserById($_POST['id']);
+	echo json_encode(["form" => $form, "user" => $data, "statuses" => $statuses], JSON_UNESCAPED_UNICODE);
+}
+
 /////////// UPDATE USER ////////////
 if (isset($_POST['update_form'])) {
 	$usersController->updateUser($_POST);
-	$data = $usersController->getUserById($_POST['id']);
+	$data = $usersController->getDataUsers();
 	echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
+
 /////////// ADD USER ////////////
 if (isset($_POST['add_form'])) {
 	$usersController->addUser($_POST);
-	$user = $usersController->getLastUser();
-	echo json_encode($user, JSON_UNESCAPED_UNICODE);
+	$users = $usersController->getDataUsers();
+	echo json_encode($users, JSON_UNESCAPED_UNICODE);
 }
 
 

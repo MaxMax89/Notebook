@@ -1,7 +1,5 @@
 $(function () {
 
-    let linkImg = 'https://shapka-youtube.ru/wp-content/uploads/2024/08/kartinka-na-avatarki-dlya-geymerov-risunok-krutogo-geymera.jpg';
-
     //////////////// LINKS ////////////////////
     let btnRemove = '.btn_delete_confirm';
     let linkRemove = '.table_notes_btn_remove';
@@ -39,23 +37,24 @@ $(function () {
     $(document).on('click', linkRemove, openPopupDelete);
     $(document).on('click', btnCansel, closePopupDelete);
 
+    let trHtml =  '';
+
 
     ////////////// FUNCTIONS //////////////
 
-    function renderUsersTrs(data) {
-        let trHtml = '';
-
+    function getUsersTr(data) {
         data.forEach((item) => {
+            console.log(`element name = ${item.name}`);
         });
-        data.forEach((item) => {
-            trHtml += `<tr id="${item.id}">
+        Object.keys(data).forEach((item) => {
+            trHtml +=  `<tr id="<?= $user['id'] ?>">
         <td>
             <div class="d-flex align-items-center">
-                <img src="${linkImg}" alt="" style="width: 45px; height: 45px" class="rounded-circle">
+                <img src="" alt="" style="width: 45px; height: 45px" class="rounded-circle">
                     <div class="ms-3">
                         <p id="name" class="fw-bold mb-1 table_notes_td_name">${item.name}</p>
                         <p id="email" class="text-muted mb-0">${item.email}</p>
-                    </div>
+            </div>
             </div>
         </td>
         <td>
@@ -64,9 +63,7 @@ $(function () {
         <td>
             <span id="status" class="badge rounded-pill d-inline">${item.status}</span>
         </td>
-        <td id="phone" class="table_notes_td_phone">
-            ${item.phone}
-        </td>
+        <td id="phone" class="table_notes_td_phone">${item.phone}</td>
         <td class="user_list_td_action">
             <div class="user_list_linc_container">
                 <a class=" btn btn-link btn-sm btn-rounded btn_update" id="${item.id}">
@@ -81,10 +78,13 @@ $(function () {
     </tr>`;
         });
         $('tbody').html(trHtml);
-        trHtml = '';
     }
 
+    function saveUser(data, user = false){
+        if(user === false){
 
+        }
+    }
     function addUser() {
         let formData = $(this).serialize();
         $.ajax({
@@ -93,19 +93,19 @@ $(function () {
             dataType: 'json',
             data: formData,
             success: function (data) {
-                renderUsersTrs(data);
+                getUsersTr(Object.values(data));
+                //let user = JSON.parse(data);
+                console.log();
+                closeForm(addFormBody, formContainer);
             }
         });
-        closeForm(addFormBody, formContainer)
 
     }
 
     function removeUser() {
         let id = $(this).attr('id');
-        $.post(ajaxUrl, {cmd: 'delete_user', id: id}, function (data) {
-            let result = JSON.parse(data);
-            renderUsersTrs(result);
-            console.log(result);
+        $.post( ajaxUrl, {cmd: 'delete_user', id: id}, function (data){
+            getUsersTr(data);
         });
         closePopupDelete();
     }
@@ -118,9 +118,12 @@ $(function () {
             dataType: 'json',
             data: formData,
             success: function (data) {
-                renderUsersTrs(data, 'tbody');
+                let tr = $('table tbody').find('#' + data[0]['id']);
+                $.each(data[0], function (key, val) {
+                    tr.find('#' + key).html(val);
+                })
             }
-        });
+        })
         closeForm(updateFormBody, formContainer);
     }
 
@@ -143,57 +146,47 @@ $(function () {
     }
 
     function openUpdateForm() {
+        let url = 'templates/forms/notebook_form_update.php';
         let id = $(this).parents('tr').attr('id');
-
-        $.post(ajaxUrl, {id: id, cmd: 'open_update_form'}, function (data) {
-            let result = JSON.parse(data);
-            let user = result['user'][0];
-            let form = result['form'];
-            let statuses = result['statuses'];
-
-            openForm(updateFormBody, form);
-
-            setFormValue(statuses, user);
-
-            setTimeout(() => {
-
-                validateForm();
-                setMask();
-            }, 50);
-        });
+        openForm(updateFormBody, url);
+        $.ajax({
+                url: ajaxUrl,
+                method: 'post',
+                dataType: 'json',
+                data: {id: id, cmd: 'open_update_form'},
+                success: function (result) {
+                    let user = result[0];
+                    $.each(user, function (key, value) {
+                        $(`[name = "${key}"]`).val(value);
+                    });
+                }
+            }
+        )
+        setTimeout(() => {
+            validateForm();
+        }, 50);
     }
-
 
     function closeAddForm() {
         closeForm(addFormBody, formContainer);
     }
 
     function openAddForm() {
-        $.post(ajaxUrl, {cmd: 'open_add_form'}, function (data) {
-
-            let result = JSON.parse(data);
-            let statuses = result['statuses'];
-            let form = result['form'];
-
-            openForm(addFormBody, form);
-            setFormValue(statuses);
-        });
-
+        let url = 'templates/forms/notebook_form_add.php';
+        openForm(addFormBody, url);
         setTimeout(() => {
             validateForm();
-            setMask();
         }, 50);
     }
 
 
-    function openForm(formBody, form) {
-        $('.block_form').html(form);
+    function openForm(form, url) {
+        $('.block_form').load(url);
         setTimeout(() => {
-            $(formBody).toggleClass('active');
+            $(form).toggleClass('active');
         }, 50);
         $('html').css('overflow-y', 'hidden');
     }
-
 
     function closeForm(formBody, formContainer) {
         $(formBody).toggleClass('active');
@@ -203,32 +196,8 @@ $(function () {
         $('html').css('overflow-y', 'visible');
     }
 
-    function setFormValue(statuses, user) {
-        let options = '';
-        if (user !== undefined) {
-            $.each(user, function (key, value) {
-                $(`[name = "${key}"]`).val(value);
-            });
-            setTimeout(() => {
-                $(`select option[value=${user['id_status']}]`).prop('selected', true);
-            }, 100);
-        }
-        $.each(statuses, function (idStatus, status) {
-            options += `<option value="${idStatus}">${status}</option>`;
-            $('form').find('select').html(options);
-        });
-    }
 
-
-    function setMask() {
-        jQuery(function ($) {
-            $('[name = "phone"]').mask("+7(999)-999-9999");
-        });
-    }
-
-
-})
-;
+});
 
 
 

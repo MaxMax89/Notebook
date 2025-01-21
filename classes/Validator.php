@@ -15,22 +15,12 @@ class Validator
 			'required' => true,
 			'max' => 50
 		],
-		'phone' => [
-			'required' => true,
-			'max' => 30
-		],
+
 		'email' => [
 			'email' => true,
 			'max' => 50
 		],
-		'id_status' => [
-			'required' => true,
-			'max' => 50
-		],
-		'note' => [
-			'required' => true,
-			'max' => 130
-		]
+
 	];
 
 
