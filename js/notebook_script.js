@@ -46,8 +46,6 @@ $(function () {
         let trHtml = '';
 
         data.forEach((item) => {
-        });
-        data.forEach((item) => {
             trHtml += `<tr id="${item.id}">
         <td>
             <div class="d-flex align-items-center">
@@ -105,7 +103,6 @@ $(function () {
         $.post(ajaxUrl, {cmd: 'delete_user', id: id}, function (data) {
             let result = JSON.parse(data);
             renderUsersTrs(result);
-            console.log(result);
         });
         closePopupDelete();
     }
@@ -204,7 +201,7 @@ $(function () {
     }
 
     function setFormValue(statuses, user) {
-        let options = '';
+        let options = "<option selected='true' disabled='disabled'>выберете статус</option>";
         if (user !== undefined) {
             $.each(user, function (key, value) {
                 $(`[name = "${key}"]`).val(value);

@@ -84,12 +84,20 @@ td.table_notes_td_phone {
     bottom: 0;
     right: 0;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.error {
+label.error {
     font-weight: 100;
     font-size: 12px;
+}
+
+.input-group {
+    display: block;
+}
+
+#inputGroupSelect04 {
+    width: 100%;
 }
 
 .notebook_form_close {
