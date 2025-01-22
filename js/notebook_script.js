@@ -201,7 +201,7 @@ $(function () {
     }
 
     function setFormValue(statuses, user) {
-        let options = "<option selected='true' disabled='disabled'>выберете статус</option>";
+        let options = "<option selected='true' disabled='disabled'>Впшеыберете статус</option>";
         if (user !== undefined) {
             $.each(user, function (key, value) {
                 $(`[name = "${key}"]`).val(value);
