@@ -24,7 +24,7 @@ $(function () {
 
     //////////// USERS CONTROLLER ////////////
     $(document).on('submit', formUpdateUser, updateUser);
-    $(document).on('click', btnRemove, removeUser);
+    $(document).on('click', btnRemove, deleteUser);
     $(document).on('submit', formAddUser, addUser);
 
     //////////// SWITCH ADD FORM ////////////
@@ -41,6 +41,15 @@ $(function () {
 
 
     ////////////// FUNCTIONS //////////////
+
+    function APP_AJAX(ajaxUrl, dataToServer){
+        return  $.ajax({
+            url: ajaxUrl,
+            method: 'post',
+            dataType: 'json',
+            data: dataToServer,
+        });
+    }
 
     function renderUsersTrs(data) {
         let trHtml = '';
@@ -85,39 +94,28 @@ $(function () {
 
     function addUser() {
         let formData = $(this).serialize();
-        $.ajax({
-            url: ajaxUrl,
-            method: 'post',
-            dataType: 'json',
-            data: formData,
-            success: function (data) {
-                renderUsersTrs(data);
-            }
-        });
+        let cmd = 'add_user';
+        let dataToServer = formData +`&cmd=${cmd}`;
+        let cmdAdd = APP_AJAX(ajaxUrl, dataToServer);
+        cmdAdd.done(renderUsersTrs)
         closeForm(addFormBody, formContainer)
-
     }
 
-    function removeUser() {
+    function deleteUser() {
         let id = $(this).attr('id');
-        $.post(ajaxUrl, {cmd: 'delete_user', id: id}, function (data) {
-            let result = JSON.parse(data);
-            renderUsersTrs(result);
-        });
+        let cmd = 'delete_user';
+        let dataToServer = `cmd=${cmd}&id=${id}`;
+        let cmdDelete = APP_AJAX(ajaxUrl, dataToServer);
+        cmdDelete.done(renderUsersTrs);
         closePopupDelete();
     }
 
     function updateUser() {
         let formData = $(this).serialize();
-        $.ajax({
-            url: ajaxUrl,
-            method: 'post',
-            dataType: 'json',
-            data: formData,
-            success: function (data) {
-                renderUsersTrs(data, 'tbody');
-            }
-        });
+        let cmd = 'update_user';
+        let dataToServer = formData +`&cmd=${cmd}`;
+        let cmdUpdate = APP_AJAX(ajaxUrl, dataToServer);
+        cmdUpdate.done(renderUsersTrs)
         closeForm(updateFormBody, formContainer);
     }
 
@@ -132,7 +130,6 @@ $(function () {
         setTimeout(() => {
             $('.btn_delete_confirm').attr('id', id);
         }, 100);
-
     }
 
     function closeUpdateForm() {
@@ -141,37 +138,29 @@ $(function () {
 
     function openUpdateForm() {
         let id = $(this).parents('tr').attr('id');
-
-        $.post(ajaxUrl, {id: id, cmd: 'open_update_form'}, function (data) {
-            let result = JSON.parse(data);
-            let user = result['user'][0];
-            let form = result['form'];
-            let statuses = result['statuses'];
-
+        let cmd = 'open_update_form';
+        let dataToServer = `cmd=${cmd}&id=${id}`;
+        let cmdOpenUpdateForm = APP_AJAX(ajaxUrl, dataToServer);
+        cmdOpenUpdateForm.done((data) => {
+            let statuses = data['statuses'];
+            let form = data['form'];
+            let user = data['user'][0];
+            console.log(user);
             openForm(updateFormBody, form);
-
             setFormValue(statuses, user);
-
-            setTimeout(() => {
-
-                validateForm();
-                setMask();
-            }, 50);
         });
     }
-
 
     function closeAddForm() {
         closeForm(addFormBody, formContainer);
     }
 
     function openAddForm() {
-        $.post(ajaxUrl, {cmd: 'open_add_form'}, function (data) {
-
-            let result = JSON.parse(data);
-            let statuses = result['statuses'];
-            let form = result['form'];
-
+        let dataToServer = 'cmd=open_add_form';
+        let cmdOpenAddForm = APP_AJAX(ajaxUrl, dataToServer);
+        cmdOpenAddForm.done((data) => {
+            let statuses = data.statuses;
+            let form = data.form;
             openForm(addFormBody, form);
             setFormValue(statuses);
         });
@@ -182,7 +171,6 @@ $(function () {
         }, 50);
     }
 
-
     function openForm(formBody, form) {
         $('.block_form').html(form);
         setTimeout(() => {
@@ -190,7 +178,6 @@ $(function () {
         }, 50);
         $('html').css('overflow-y', 'hidden');
     }
-
 
     function closeForm(formBody, formContainer) {
         $(formBody).toggleClass('active');
@@ -216,16 +203,13 @@ $(function () {
         });
     }
 
-
     function setMask() {
         jQuery(function ($) {
             $('[name = "phone"]').mask("+7(999)-999-9999");
         });
     }
 
-
-})
-;
+});
 
 
 

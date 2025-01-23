@@ -23,14 +23,14 @@ if ($_POST['cmd'] == 'delete_user') {
 	echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 
-/////////// OPEN ADD FORM ////////////
+///////////// FORM CONTROL /////////////
 if ($_POST['cmd'] == 'open_add_form') {
 	$statuses = $usersController->getStatuses();
 	$form = file_get_contents('../templates/forms/notebook_form_add.php');
 	echo json_encode(['form' => $form, 'statuses' => $statuses], JSON_UNESCAPED_UNICODE);
 }
 
-/////////// OPEN UPDATE FORM ////////////
+
 if ($_POST['cmd'] == 'open_update_form') {
 	$statuses = $usersController->getStatuses();
 	$form = file_get_contents('../templates/forms/notebook_form_update.php');
@@ -38,15 +38,14 @@ if ($_POST['cmd'] == 'open_update_form') {
 	echo json_encode(["form" => $form, "user" => $data, "statuses" => $statuses], JSON_UNESCAPED_UNICODE);
 }
 
-/////////// UPDATE USER ////////////
-if (isset($_POST['update_form'])) {
+///////////// USERS CONTROL /////////////
+if ($_POST['cmd'] == 'update_user') {
 	$usersController->updateUser($_POST);
 	$data = $usersController->getDataUsers();
 	echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 
-/////////// ADD USER ////////////
-if (isset($_POST['add_form'])) {
+if ($_POST['cmd'] == 'add_user') {
 	$usersController->addUser($_POST);
 	$users = $usersController->getDataUsers();
 	echo json_encode($users, JSON_UNESCAPED_UNICODE);

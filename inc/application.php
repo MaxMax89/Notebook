@@ -4,11 +4,11 @@ include "classes/UsersController.php";
 include "classes/Db.php";
 
 
+
 $db = new Db($dbConfig);
 
 $usersController = new UsersController($db);
 
-$statuses = $usersController->getStatuses();
 $DATA_TPL = $usersController->getDataUsers();
 
 
