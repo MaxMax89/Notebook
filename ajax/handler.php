@@ -23,6 +23,11 @@ if ($_POST['cmd'] == 'delete_user') {
 	echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 
+if ($_POST['cmd'] == 'get_data_tpl') {
+	$data = $usersController->getDataUsers();
+	echo json_encode($data, JSON_UNESCAPED_UNICODE);
+}
+
 ///////////// FORM CONTROL /////////////
 if ($_POST['cmd'] == 'open_add_form') {
 	$statuses = $usersController->getStatuses();

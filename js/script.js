@@ -1,6 +1,6 @@
+
 $(function () {
 
-    let linkImg = 'https://shapka-youtube.ru/wp-content/uploads/2024/08/kartinka-na-avatarki-dlya-geymerov-risunok-krutogo-geymera.jpg';
 
     //////////////// LINKS ////////////////////
     let btnRemove = '.btn_delete_confirm';
@@ -40,7 +40,50 @@ $(function () {
     $(document).on('click', btnCansel, closePopupDelete);
 
 
+
+
+
+     let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
+
+
+     cmdGetUsersData.done((data)=> {
+         APP.DATA = data;
+         let trhtml = '';
+         data.forEach((item)=>{
+             trhtml += renderTpl(APP.TPL.USER_TR, item);
+         })
+         console.log(trhtml);
+         $('.test').append(trhtml);
+     })
+
+
+
+    function renderTpl(tpl, data){
+         let result = '';
+            $.each(data, (key, val) => {
+                tpl = tpl.replace('{{'+key+'}}', val);
+            });
+        return tpl;
+    }
+
+
+
+
+
     ////////////// FUNCTIONS //////////////
+
+    function renderTp(data, tpl){
+        let result = '';
+         data.forEach((elem) => {
+
+         result +=   `${tpl}`;
+        });
+        return result;
+    }
+
+
+
+
 
     function APP_AJAX(ajaxUrl, dataToServer){
         return  $.ajax({
@@ -90,6 +133,8 @@ $(function () {
         $('tbody').html(trHtml);
         trHtml = '';
     }
+
+
 
 
     function addUser() {
@@ -145,7 +190,6 @@ $(function () {
             let statuses = data['statuses'];
             let form = data['form'];
             let user = data['user'][0];
-            console.log(user);
             openForm(updateFormBody, form);
             setFormValue(statuses, user);
         });
@@ -159,8 +203,8 @@ $(function () {
         let dataToServer = 'cmd=open_add_form';
         let cmdOpenAddForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenAddForm.done((data) => {
-            let statuses = data.statuses;
-            let form = data.form;
+            let statuses = data['statuses'];
+            let form = data['form'];
             openForm(addFormBody, form);
             setFormValue(statuses);
         });
