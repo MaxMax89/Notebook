@@ -13,5 +13,10 @@
     <link rel="stylesheet" href="css/style.css?v=134_<?= time() ?>">
 </head>
 <body>
-<div class="test"></div>
+<div class="block_form"></div>
+<div class="container">
+    <div class="d-grid gap-2 col-12 mx-auto user_list_add_wrapper">
+        <button class="btn btn-primary user_list_button_add" type="button" data-mdb-ripple-init>ADD +</button>
+    </div>
+
 

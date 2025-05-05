@@ -1,4 +1,3 @@
-
 $(function () {
 
 
@@ -21,7 +20,7 @@ $(function () {
     let formUpdateUser = '#notebook_form_update';
     let formAddUser = '#notebook_form_add';
 
-
+    $(document).ready(renderTableNotes);
     //////////// USERS CONTROLLER ////////////
     $(document).on('submit', formUpdateUser, updateUser);
     $(document).on('click', btnRemove, deleteUser);
@@ -40,53 +39,63 @@ $(function () {
     $(document).on('click', btnCansel, closePopupDelete);
 
 
+    $(document).ready(() => {
+        let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
+        cmdGetUsersData.done(renderTableNotes)
+    });
+
+    ////////////// FUNCTIONS //////////////
+    function renderTableNotes(data) {
+        APP.TPL.USER_TR = getTableRows(data);
+        $('table').remove();
+        $('.container').append(APP.TPL.TABLE_NOTES);
+        $('tbody').html(APP.TPL.USER_TR);
+    }
 
 
+    function getTableRows(data) {
+        let itemHTML = '';
+        data.forEach((item) => {
+            itemHTML += ` <tr id="${item.id}">
+                <td><div class="d-flex align-items-center">
+                        <img src="https://shapka-youtube.ru/wp-content/uploads/2024/08/kartinka-na-avatarki-dlya-geymerov-risunok-krutogo-geymera.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle">
+                    <div class="ms-3"><p id="name" class="fw-bold mb-1 table_notes_td_name">${item.name}</p>
+                    <p id="email" class="text-muted mb-0">${item.email}</p>
+                    </div>
+                </td>
+                <td>
+                    <p id="note" class="fw-normal mb-1 table_notes_td_note">
+                    ${item.note}
+                    </p>
+                </td>
+                <td>
+                    <span id="status" class="badge rounded-pill d-inline">${item.status}</span>
+                </td>
+                <td id="phone" class="table_notes_td_phone">${item.phone}</td>
+                <td class="user_list_td_action">
+                    <div class="user_list_linc_container">
+                        <a class=" btn btn-link btn-sm btn-rounded btn_update" id=""> 
+                            <img src="../img/update_user_icon.svg" alt="img">
+                        </a>
+                        <a type="submit" class="btn btn-link btn-sm btn-rounded table_notes_btn_remove"id="">
+                            <img src="../img/delete_user_icon.svg" class="table_notes_delete_icon" alt="">
+                         </a>
+                    </div>
+                </td>
+                    </tr>`
+        });
+        return itemHTML;
+    }
 
-     let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
-
-
-     cmdGetUsersData.done((data)=> {
-         APP.DATA = data;
-         let trhtml = '';
-         data.forEach((item)=>{
-             trhtml += renderTpl(APP.TPL.USER_TR, item);
-         })
-         console.log(trhtml);
-         $('.test').append(trhtml);
-     })
-
-
-
-    function renderTpl(tpl, data){
-         let result = '';
-            $.each(data, (key, val) => {
-                tpl = tpl.replace('{{'+key+'}}', val);
-            });
+    function renderTpl(tpl, data) {
+        $.each(data, (key, val) => {
+            tpl = tpl.replace('{{' + key + '}}', val);
+        });
         return tpl;
     }
 
-
-
-
-
-    ////////////// FUNCTIONS //////////////
-
-    function renderTp(data, tpl){
-        let result = '';
-         data.forEach((elem) => {
-
-         result +=   `${tpl}`;
-        });
-        return result;
-    }
-
-
-
-
-
-    function APP_AJAX(ajaxUrl, dataToServer){
-        return  $.ajax({
+    function APP_AJAX(ajaxUrl, dataToServer) {
+        return $.ajax({
             url: ajaxUrl,
             method: 'post',
             dataType: 'json',
@@ -94,55 +103,12 @@ $(function () {
         });
     }
 
-    function renderUsersTrs(data) {
-        let trHtml = '';
-
-        data.forEach((item) => {
-            trHtml += `<tr id="${item.id}">
-        <td>
-            <div class="d-flex align-items-center">
-                <img src="${linkImg}" alt="" style="width: 45px; height: 45px" class="rounded-circle">
-                    <div class="ms-3">
-                        <p id="name" class="fw-bold mb-1 table_notes_td_name">${item.name}</p>
-                        <p id="email" class="text-muted mb-0">${item.email}</p>
-                    </div>
-            </div>
-        </td>
-        <td>
-            <p id="note" class="fw-normal mb-1 table_notes_td_note">${item.note}</p>
-        </td>
-        <td>
-            <span id="status" class="badge rounded-pill d-inline">${item.status}</span>
-        </td>
-        <td id="phone" class="table_notes_td_phone">
-            ${item.phone}
-        </td>
-        <td class="user_list_td_action">
-            <div class="user_list_linc_container">
-                <a class=" btn btn-link btn-sm btn-rounded btn_update" id="${item.id}">
-                    <img src="../img/update_user_icon.svg" alt="img">
-                </a>
-                <a type="submit" class="btn btn-link btn-sm btn-rounded table_notes_btn_remove"
-                   id="<${item.email}">
-                    <img src="../img/delete_user_icon.svg" class="table_notes_delete_icon" alt="">
-                </a>
-            </div>
-        </td>
-    </tr>`;
-        });
-        $('tbody').html(trHtml);
-        trHtml = '';
-    }
-
-
-
-
     function addUser() {
         let formData = $(this).serialize();
         let cmd = 'add_user';
-        let dataToServer = formData +`&cmd=${cmd}`;
+        let dataToServer = formData + `&cmd=${cmd}`;
         let cmdAdd = APP_AJAX(ajaxUrl, dataToServer);
-        cmdAdd.done(renderUsersTrs)
+        cmdAdd.done(renderTableNotes);
         closeForm(addFormBody, formContainer)
     }
 
@@ -151,16 +117,16 @@ $(function () {
         let cmd = 'delete_user';
         let dataToServer = `cmd=${cmd}&id=${id}`;
         let cmdDelete = APP_AJAX(ajaxUrl, dataToServer);
-        cmdDelete.done(renderUsersTrs);
+        cmdDelete.done(renderTableNotes);
         closePopupDelete();
     }
 
     function updateUser() {
         let formData = $(this).serialize();
         let cmd = 'update_user';
-        let dataToServer = formData +`&cmd=${cmd}`;
+        let dataToServer = formData + `&cmd=${cmd}`;
         let cmdUpdate = APP_AJAX(ajaxUrl, dataToServer);
-        cmdUpdate.done(renderUsersTrs)
+        cmdUpdate.done(renderTableNotes)
         closeForm(updateFormBody, formContainer);
     }
 
@@ -169,9 +135,11 @@ $(function () {
     }
 
     function openPopupDelete() {
+        let popupDelete = APP.TPL.POPUP_DELETE;
         let id = $(this).parents('tr').attr('id');
+        let popupWrapper = '.popup_delete';
         $('body').prepend('<div class="popup_delete"></div>');
-        $('.popup_delete').load('templates/popup_delete.php');
+        $(popupWrapper).html(popupDelete);
         setTimeout(() => {
             $('.btn_delete_confirm').attr('id', id);
         }, 100);
@@ -188,7 +156,7 @@ $(function () {
         let cmdOpenUpdateForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenUpdateForm.done((data) => {
             let statuses = data['statuses'];
-            let form = data['form'];
+            let form = APP.TPL.UPDATE_FORM;
             let user = data['user'][0];
             openForm(updateFormBody, form);
             setFormValue(statuses, user);
@@ -204,7 +172,7 @@ $(function () {
         let cmdOpenAddForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenAddForm.done((data) => {
             let statuses = data['statuses'];
-            let form = data['form'];
+            let form = APP.TPL.ADD_FORM;
             openForm(addFormBody, form);
             setFormValue(statuses);
         });

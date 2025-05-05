@@ -12,9 +12,6 @@ class UsersController
 		$this->db = $db;
 	}
 
-	public function getLastUser(){
-		return $this->db->getData('SELECT *  FROM `users`  LEFT JOIN `statuses` ON users.id_status = statuses.id_status  ORDER BY ID DESC LIMIT 1');
-	}
 
 	public function getDataUsers()
 	{
@@ -48,7 +45,7 @@ class UsersController
 	public function getStatuses()
 	{
 		$result = $this->db->getData('SELECT * FROM `statuses`');
-		foreach ($result as $row){
+		foreach ($result as $row) {
 			$statuses[$row['id_status']] = $row['status'];
 		}
 		return $statuses;

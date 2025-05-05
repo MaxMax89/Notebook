@@ -12,7 +12,7 @@ $usersController = new UsersController($db);
 $DATA_TPL = $usersController->getDataUsers();
 
 
-include 'templates/table_notes.php';
+
 
 
 
