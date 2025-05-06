@@ -23,7 +23,6 @@ class UsersController
 				'name' => $user['name'],
 				'phone' => $user['phone'],
 				'email' => $user['email'],
-				'id_status' => $user['id_status'],
 				'status' => $statuses[$user['id_status']],
 				'note' => $user['note']
 

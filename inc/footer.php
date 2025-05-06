@@ -5,8 +5,9 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="js/libraries/jquery.maskedinput.min.js"></script>
 <script src="js/libraries/validate.js?<?= time() ?>"></script>
-<script src="js/script.js?<?= time() ?>"></script>
 <script  src="js/templates.js?<?= time() ?>"></script>
+<script src="js/script.js?<?= time() ?>"></script>
+
 
 
 </body>
