@@ -44,6 +44,9 @@ $(function () {
         cmdGetUsersData.done(renderTableNotes)
     });
 
+
+
+
     ////////////// FUNCTIONS //////////////
     function renderTableNotes(data) {
         let userTr = APP_TEMPLATES.TABLE_ROWS(data);
