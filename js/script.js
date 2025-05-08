@@ -119,9 +119,7 @@ $(function () {
             let statuses = data['statuses'];
             let user = data['user'][0];
             let form = APP_TEMPLATES.getFormUpdate(user, statuses);
-
             openForm(updateFormBody, form);
-            //setFormValue(statuses, user);
         });
     }
 

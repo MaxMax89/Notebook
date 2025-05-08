@@ -1,12 +1,15 @@
 let APP_TEMPLATES = (function () {
 
+    let getFormOptions = function (statuses){
+        let itemHTML = `<option selected='true' disabled='disabled'>Выберете статус</option>`;
+        $.each(statuses, (id, status) => {
+            itemHTML += `<option name="status" value="${id}">${status}</option>`
+        });
+        return itemHTML;
+    }
 
     let getFormUpdate = function (user, statuses) {
-        let formOptions = '';
-
-        $.each(statuses, (id, status) => {
-            formOptions += `<option name="status" value="${id}">${status}</option>`
-        });
+        let formOptions = getFormOptions(statuses);
 
         setTimeout(() => {
             $(`select option[value=${user['id_status']}]`).prop('selected', true);
@@ -62,11 +65,8 @@ let APP_TEMPLATES = (function () {
     }
 
     let getFormAdd = function(statuses) {
-        let formOptions = '';
 
-        $.each(statuses, (id, status) => {
-            formOptions += `<option name="status" value="${id}">${status}</option>`
-        });
+        let formOptions = getFormOptions(statuses);
 
         return `<div class="notebook_form_container">
                                     <a class="link_form_close" id="link_add_form_close"></a>
