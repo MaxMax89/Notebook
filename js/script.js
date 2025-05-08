@@ -2,28 +2,28 @@ $(function () {
 
 
     //////////////// LINKS ////////////////////
-    let btnRemove           = '.btn_delete_confirm';
-    let linkRemove          = '.table_notes_btn_remove';
-    let btnCansel           = '#popup_delete_close';
-    let linkCloseAddForm    = '#link_add_form_close';
+    let btnRemove = '.btn_delete_confirm';
+    let linkRemove = '.table_notes_btn_remove';
+    let btnCansel = '#popup_delete_close';
+    let linkCloseAddForm = '#link_add_form_close';
     let linkCloseUpdateForm = '#link_update_form_close';
-    let btnAdd              = '.user_list_button_add';
-    let btnUpdate           = '.btn_update';
-    let ajaxUrl             = 'ajax/handler.php';
+    let btnAdd = '.user_list_button_add';
+    let btnUpdate = '.btn_update';
+    let ajaxUrl = 'ajax/handler.php';
 
     //////////////// FORMS WRAPPERS ////////////////
-    let addFormBody         = '.notebook_form_body_add';
-    let updateFormBody      = '.notebook_form_body_update';
-    let formContainer       = '.notebook_form_container';
+    let addFormBody = '.notebook_form_body_add';
+    let updateFormBody = '.notebook_form_body_update';
+    let formContainer = '.notebook_form_container';
 
     //////////////// FORMS ////////////////
-    let formUpdateUser      = '#notebook_form_update';
-    let formAddUser         = '#notebook_form_add';
+    let formUpdateUser = '#notebook_form_update';
+    let formAddUser = '#notebook_form_add';
 
 
     //////////// USERS CONTROLLER ////////////
     $(document).on('submit', formUpdateUser, updateUser);
-    $(document).on('click',  btnRemove, deleteUser);
+    $(document).on('click', btnRemove, deleteUser);
     $(document).on('submit', formAddUser, addUser);
 
     //////////// SWITCH ADD FORM ////////////
@@ -43,8 +43,6 @@ $(function () {
         let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
         cmdGetUsersData.done(renderTableNotes)
     });
-
-
 
 
     ////////////// FUNCTIONS //////////////
