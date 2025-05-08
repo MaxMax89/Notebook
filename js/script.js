@@ -49,8 +49,7 @@ $(function () {
 
     ////////////// FUNCTIONS //////////////
     function renderTableNotes(data) {
-        let userTr = APP_TEMPLATES.TABLE_ROWS(data);
-        let tableNotes = APP_TEMPLATES.TABLE_NOTES(userTr);
+        let tableNotes = APP_TEMPLATES.getTableTPL(data);
         $('table').remove();
         $('.container').append(tableNotes);
     }
@@ -97,7 +96,7 @@ $(function () {
     }
 
     function openPopupDelete() {
-        let popupDelete = APP_TEMPLATES.POPUP_DELETE;
+        let popupDelete = APP_TEMPLATES.getPopupDelete;
         let id = $(this).parents('tr').attr('id');
         let popupWrapper = '.popup_delete';
         $('body').prepend('<div class="popup_delete"></div>');
@@ -118,10 +117,11 @@ $(function () {
         let cmdOpenUpdateForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenUpdateForm.done((data) => {
             let statuses = data['statuses'];
-            let form = APP_TEMPLATES.UPDATE_FORM;
             let user = data['user'][0];
+            let form = APP_TEMPLATES.getFormUpdate(user, statuses);
+
             openForm(updateFormBody, form);
-            setFormValue(statuses, user);
+            //setFormValue(statuses, user);
         });
     }
 
@@ -134,15 +134,11 @@ $(function () {
         let cmdOpenAddForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenAddForm.done((data) => {
             let statuses = data['statuses'];
-            let form = APP_TEMPLATES.ADD_FORM;
+            let form = APP_TEMPLATES.getFormAdd(statuses);
             openForm(addFormBody, form);
-            setFormValue(statuses);
         });
 
-        setTimeout(() => {
-            validateForm();
-            setMask();
-        }, 50);
+
     }
 
     function openForm(formBody, form) {
@@ -151,6 +147,10 @@ $(function () {
             $(formBody).toggleClass('active');
         }, 50);
         $('html').css('overflow-y', 'hidden');
+        setTimeout(() => {
+            validateForm();
+            setMask();
+        }, 50);
     }
 
     function closeForm(formBody, formContainer) {
@@ -159,22 +159,6 @@ $(function () {
             $(formContainer).remove();
         }, 100);
         $('html').css('overflow-y', 'visible');
-    }
-
-    function setFormValue(statuses, user) {
-        let options = "<option selected='true' disabled='disabled'>Выберете статус</option>";
-        if (user !== undefined) {
-            $.each(user, function (key, value) {
-                $(`[name = "${key}"]`).val(value);
-            });
-            setTimeout(() => {
-                $(`select option[value=${user['id_status']}]`).prop('selected', true);
-            }, 100);
-        }
-        $.each(statuses, function (idStatus, status) {
-            options += `<option value="${idStatus}">${status}</option>`;
-            $('form').find('select').html(options);
-        });
     }
 
     function setMask() {

@@ -1,8 +1,18 @@
+let APP_TEMPLATES = (function () {
 
 
-let APP_TEMPLATES = (function(){
+    let getFormUpdate = function (user, statuses) {
+        let formOptions = '';
 
-        let UPDATE_FORM = `<div class="notebook_form_container">
+        $.each(statuses, (id, status) => {
+            formOptions += `<option name="status" value="${id}">${status}</option>`
+        });
+
+        setTimeout(() => {
+            $(`select option[value=${user['id_status']}]`).prop('selected', true);
+        }, 100);
+
+        return  `<div class="notebook_form_container">
                                     <a class="link_form_close" id="link_update_form_close"></a>
                                     <div class="notebook_form_body notebook_form_body_update">
                                         <div class="notebook_form_header"><a class="notebook_form_close" id="link_update_form_close">
@@ -10,36 +20,36 @@ let APP_TEMPLATES = (function(){
                                             </a></div>
                                         <form method="post" id="notebook_form_update" onsubmit="return false">
                                             <div class="mb-3">
-                                                <input type="hidden" name="id" value="">
+                                                <input type="hidden" name="id" value="${user.id}">
                                                 <input type="hidden" name="update_form" value="">
                                                 <div id="emailHelp" class="form-text"></div>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputName1" class="form-label input_name">Введите имя</label>
-                                                <input type="text" name="name" value="" class="form-control"
+                                                <input type="text" name="name" value="${user.name}" class="form-control"
                                                        id="exampleInputName1"
                                                        aria-describedby="emailHelp">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputPhone1" class="form-label">Введите телефон</label>
-                                                <input type="tel" name="phone" value="" class="form-control  input_phone"
+                                                <input type="tel" name="phone" value="${user.phone}" class="form-control  input_phone"
                                                        id="exampleInputPhone1"
                                                        aria-describedby="emailHelp">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
-                                                <input type="email" name="email" value="" class="form-control input_email "
+                                                <input type="email" name="email" value="${user.email}" class="form-control input_email "
                                                        id="exampleInputEmail1"
                                                        aria-describedby="emailHelp">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputNote1" class="form-label">Введите заметку</label>
                                                 <textarea type="text" name="note" value="" class="form-control"
-                                                          id="exampleInputNote1"></textarea>
+                                                          id="exampleInputNote1">${user.note}</textarea>
                                             </div>
                                             <div class="input-group">
                                                 <select class="form-select notebook_form_inputs" name="id_status" id="inputGroupSelect04">
-                                                        <option name="status" value=""></option>
+                                                       ${formOptions} 
                                                 </select>
                                             </div>
                                             <div class="notebook_form_links">
@@ -49,7 +59,16 @@ let APP_TEMPLATES = (function(){
                                         </form>
                                     </div>`;
 
-        let ADD_FORM = `<div class="notebook_form_container">
+    }
+
+    let getFormAdd = function(statuses) {
+        let formOptions = '';
+
+        $.each(statuses, (id, status) => {
+            formOptions += `<option name="status" value="${id}">${status}</option>`
+        });
+
+        return `<div class="notebook_form_container">
                                     <a class="link_form_close" id="link_add_form_close"></a>
                                     <div class="notebook_form_body notebook_form_body_add">
                                         <div class="notebook_form_header"><a class="notebook_form_close" id="link_add_form_close">
@@ -86,7 +105,7 @@ let APP_TEMPLATES = (function(){
                                             </div>
                                             <div class="input-group">
                                                 <select class="form-select notebook_form_inputs" name="id_status" id="inputGroupSelect04">
-                                                    <option name="status" value=""></option>
+                                                    ${formOptions}
                                                 </select>
                                             </div>
                                             <div class="notebook_form_links">
@@ -96,8 +115,10 @@ let APP_TEMPLATES = (function(){
                                         </form>
                                     </div>
                                 </div>`;
+    }
 
-        let POPUP_DELETE = `<div class="popup_delete_confirm">
+
+    let getPopupDelete = `<div class="popup_delete_confirm">
                                         <a class="popup_form_close" id="popup_delete_close"></a>
                                         <div class="popup_delete_body">
                                             <h4 class="popup_delete_title">удалить заметку?</h4>
@@ -107,10 +128,21 @@ let APP_TEMPLATES = (function(){
                                             </div>
                                         </div>
                                     </div>`;
-        let TABLE_ROWS = function (data){
-            let itemHTML = '';
-            data.forEach((item) => {
-                itemHTML += ` <tr id="${item.id}">
+
+    let getTableTPL = function (data) {
+        let itemHTML = `<table class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                             <th>name</th>
+                             <th>Note</th>
+                             <th>Status</th>
+                             <th>Phone</th>
+                             <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+        data.forEach((item) => {
+            itemHTML += `<tr id="${item.id}">
                 <td><div class="d-flex align-items-center">
                         <img src="https://shapka-youtube.ru/wp-content/uploads/2024/08/kartinka-na-avatarki-dlya-geymerov-risunok-krutogo-geymera.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle">
                     <div class="ms-3"><p id="name" class="fw-bold mb-1 table_notes_td_name">${item.name}</p>
@@ -137,32 +169,17 @@ let APP_TEMPLATES = (function(){
                     </div>
                 </td>
                     </tr>`
-            });
-            return itemHTML;
-        }
-        let  TABLE_NOTES =  function (rows) {
-             return  `<table class="table align-middle mb-0 bg-white">
-                    <thead class="bg-light">
-                        <tr>
-                             <th>name</th>
-                             <th>Note</th>
-                             <th>Status</th>
-                             <th>Phone</th>
-                             <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    ${rows}
-                    </tbody>
-                </table> `
-        };
-        return {
-            TABLE_NOTES: TABLE_NOTES,
-            TABLE_ROWS: TABLE_ROWS,
-            ADD_FORM: ADD_FORM,
-            UPDATE_FORM: UPDATE_FORM,
-            POPUP_DELETE: POPUP_DELETE
-        };
+        });
+
+        itemHTML += `</tbody></table>`;
+        return itemHTML;
+    };
+    return {
+        getTableTPL: getTableTPL,
+        getFormAdd: getFormAdd,
+        getFormUpdate: getFormUpdate,
+        getPopupDelete: getPopupDelete
+    };
 
 })();
 
