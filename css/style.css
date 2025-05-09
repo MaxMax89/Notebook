@@ -15,7 +15,7 @@ html {
     background: #CC1013FF;
 }
 
-.user_list_add_wrapper {
+.btn_add_wrapper {
     display: flex;
 
 }
@@ -39,7 +39,7 @@ td.table_notes_td_phone {
     min-width: 160px;
 }
 
-.notebook_form_header {
+.form_header {
     display: flex;
     justify-content: flex-end;
     margin: 15px 0 0 0;
@@ -58,7 +58,7 @@ td.table_notes_td_phone {
     width: 30px;
 }
 
-.notebook_form_body {
+.form_body {
     width: 20%;
     height: 100%;
     padding: 0 30px;
@@ -71,12 +71,12 @@ td.table_notes_td_phone {
     border: 1px solid #E0E0E0FF;
 }
 
-.notebook_form_body.active {
+.form_body.active {
     right: 0;
     transition: all 0.3s ease 0s;
 }
 
-.link_form_close {
+.overlow_form {
     position: fixed;
     top: 0;
     left: 0;
@@ -119,7 +119,7 @@ label.error {
 }
 
 
-.popup_delete_confirm {
+.form_delete {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
@@ -129,7 +129,7 @@ label.error {
     justify-content: center;
 }
 
-.popup_delete_body {
+.form_delete_body {
     background: white;
     width: 360px;
     height: 160px;
@@ -141,13 +141,13 @@ label.error {
     border-radius: 5px;
 }
 
-.popup_delete_title {
+.form_delete_title {
     padding: 15px;
     text-align: center;
 
 }
 
-.popup_delete_links {
+.form_delete_buttons {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -191,7 +191,7 @@ label.error {
     color: white;
 }
 
-.popup_form_close {
+.overlow_form_delete {
     width: 100%;
     height: 100%;
     position: absolute;

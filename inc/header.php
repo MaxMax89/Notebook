@@ -15,7 +15,7 @@
 <body>
 <div class="block_form js_form_container"></div>
 <div class="container js_app_container">
-    <div class="d-grid gap-2 col-12 mx-auto user_list_add_wrapper">
+    <div class="d-grid gap-2 col-12 mx-auto btn_add_wrapper">
         <button class="btn btn-primary user_list_button_add js_btn_item_add" type="button" data-mdb-ripple-init>ADD +</button>
     </div>
 

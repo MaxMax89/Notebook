@@ -19,10 +19,10 @@ let APP_TEMPLATES = (function () {
     let getTplFormUpdate = function (user, statuses) {
         let formOptions = getFormOptions(statuses, user['id_status']);
 
-        return `<div class="notebook_form_container">
-                                    <a class="link_form_close js_btn_form_update_close"></a>
-                                    <div class="notebook_form_body  js_form_wrapper">
-                                        <div class="notebook_form_header"><a class="notebook_form_close js_btn_form_update_close">
+        return `<div class="form_container">
+                                    <a class="overlow_form js_btn_form_update_close"></a>
+                                    <div class="form_body  js_form_wrapper">
+                                        <div class="form_header"><a class="notebook_form_close js_btn_form_update_close">
                                                 <img src="../../img/icon_close.svg" alt="">
                                             </a></div>
                                         <form method="post" class="js_form_update" onsubmit="return false">
@@ -72,10 +72,10 @@ let APP_TEMPLATES = (function () {
 
         let formOptions = getFormOptions(statuses);
 
-        return `<div class="notebook_form_container">
-                                    <a class="link_form_close js_btn_form_add_close" ></a>
-                                    <div class="notebook_form_body  js_form_wrapper">
-                                        <div class="notebook_form_header"><a class="notebook_form_close js_btn_form_add_close" >
+        return `<div class="form_container">
+                                    <a class="overlow_form js_btn_form_add_close" ></a>
+                                    <div class="form_body  js_form_wrapper">
+                                        <div class="form_header"><a class="notebook_form_close js_btn_form_add_close" >
                                                 <img src="../../img/icon_close.svg" alt="">
                                             </a></div>
                                         <form method="post" class="notebook_form_add js_form_add"  onsubmit="return false">
@@ -122,11 +122,11 @@ let APP_TEMPLATES = (function () {
     }
 
 
-    let getTplFormDelete = `<div class="popup_delete_confirm js_form_delete">
-                                        <a class="popup_form_close js_btn_form_delete_cancel"></a>
-                                        <div class="popup_delete_body">
-                                            <h4 class="popup_delete_title">удалить заметку?</h4>
-                                            <div class="popup_delete_links">
+    let getTplFormDelete = `<div class="form_delete js_form_delete">
+                                        <a class="overlow_form_delete js_btn_form_delete_cancel"></a>
+                                        <div class="form_delete_body">
+                                            <h4 class="form_delete_title">удалить заметку?</h4>
+                                            <div class="form_delete_buttons">
                                                 <a class="btn btn-primary btn_delete_cancel js_btn_form_delete_cancel" >ОТМЕНА</a>
                                                 <a class="btn btn-primary btn_red btn_delete_confirm js_btn_form_delete_confirm" data-item-delete-id="">УДАЛИТЬ</a>
                                             </div>

@@ -43,8 +43,7 @@ $(function () {
 
     $(document).ready(() => {
         let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
-        cmdGetUsersData.done(renderTableNotes)
-                        .fail(renderErrorLoadTable);
+        cmdGetUsersData.done(renderTableNotes);
     });
 
 
@@ -57,9 +56,7 @@ $(function () {
         $(appContainer).append(tableNotes);
     }
 
-    function renderErrorLoadTable(){
 
-    }
 
     function APP_AJAX(ajaxUrl, dataToServer) {
         return $.ajax({
