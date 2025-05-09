@@ -69,7 +69,6 @@ td.table_notes_td_phone {
     z-index: 3;
     background: white;
     border: 1px solid #E0E0E0FF;
-
 }
 
 .notebook_form_body.active {
@@ -214,4 +213,26 @@ label.error {
 #popup_delete {
     width: 100%;
     height: 100%;
+}
+
+.pagination .page-item {
+    margin: 0 2px;
+}
+.pagination .page-item .page-link {
+    color: #000000;
+    background-color: #ffffff;
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #000000;
+    transition: all 0.3s ease;
+}
+.pagination .page-item.active .page-link {
+    background-color: #ffffff;
+    border-color: #000000;
+    color: #ca6363;
+}
+.pagination .page-item .page-link:hover {
+    color: #0000ff;
+    background-color: #f0f0f0;
+    border-color: #0000ff;
 }

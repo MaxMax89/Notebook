@@ -13,22 +13,27 @@ class UsersController
 	}
 
 
-	public function getDataUsers()
+	public function getDataUsers($offset = false, $limit =false )
 	{
 		$users = self::getAllUsers();
 		$statuses = self::getStatuses();
 		foreach ($users as $user) {
 			$DATA_USERS[] = [
-				'id' => $user['id'],
-				'name' => $user['name'],
-				'phone' => $user['phone'],
-				'email' => $user['email'],
+				'id'     => $user['id'],
+				'name'   => $user['name'],
+				'phone'  => $user['phone'],
+				'email'  => $user['email'],
 				'status' => $statuses[$user['id_status']],
-				'note' => $user['note']
+				'note'   => $user['note']
 
 			];
 		}
+		if($offset !== false AND $limit !== false) {
+			$DATA_USERS = array_slice($DATA_USERS, $offset, $limit);
+		}
+
 		return $DATA_USERS;
+
 	}
 
 	public function getAllUsers()
@@ -61,6 +66,8 @@ class UsersController
 		}
 
 	}
+
+
 
 	public function updateUser($data)
 	{

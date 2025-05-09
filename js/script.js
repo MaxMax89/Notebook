@@ -1,57 +1,65 @@
 $(function () {
 
+    let btnFormDeleteConfirm    = '.js_btn_form_delete_confirm';
+    let btnFormDeleteCansel     = '.js_btn_form_delete_cancel';
+    let btnItemDelete           = '.js_btn_item_delete';
+    let btnItemUpdate           = '.js_btn_item_update';
+    let btnItemAdd              = '.js_btn_item_add';
+    let btnFormUpdateClose      = '.js_btn_form_update_close';
+    let btnFormAddClose         = '.js_btn_form_add_close';
 
-    //////////////// LINKS ////////////////////
-    let btnRemove = '.btn_delete_confirm';
-    let linkRemove = '.table_notes_btn_remove';
-    let btnCansel = '#popup_delete_close';
-    let linkCloseAddForm = '#link_add_form_close';
-    let linkCloseUpdateForm = '#link_update_form_close';
-    let btnAdd = '.user_list_button_add';
-    let btnUpdate = '.btn_update';
-    let ajaxUrl = 'ajax/handler.php';
-
-    //////////////// FORMS WRAPPERS ////////////////
-    let addFormBody = '.notebook_form_body_add';
-    let updateFormBody = '.notebook_form_body_update';
-    let formContainer = '.notebook_form_container';
-
-    //////////////// FORMS ////////////////
-    let formUpdateUser = '#notebook_form_update';
-    let formAddUser = '#notebook_form_add';
+    let dataItemDeleteId        = 'data-item-delete-id';
+    let dataItemUpdateId        = 'data-item-update-id';
 
 
-    //////////// USERS CONTROLLER ////////////
-    $(document).on('submit', formUpdateUser, updateUser);
-    $(document).on('click', btnRemove, deleteUser);
-    $(document).on('submit', formAddUser, addUser);
+    let formContainer           = '.js_form_container';
+    let formWrapper             = '.js_form_wrapper';
+    let formDelete              = '.js_form_delete';
+    let formUpdate              = '.js_form_update';
+    let formAdd                 = '.js_form_add';
 
-    //////////// SWITCH ADD FORM ////////////
-    $(document).on("click", btnAdd, openAddForm);
-    $(document).on("click", linkCloseAddForm, closeAddForm);
+    let ajaxUrl                 = 'ajax/handler.php';
+    let appContainer            = '.js_app_container'
 
-    //////////// SWITCH UPDATE FORM ////////////
-    $(document).on("click", btnUpdate, openUpdateForm);
-    $(document).on('click', linkCloseUpdateForm, closeUpdateForm);
 
-    //////////// SWITCH DELETE CONFIRM POPUP ////////////
-    $(document).on('click', linkRemove, openPopupDelete);
-    $(document).on('click', btnCansel, closePopupDelete);
+
+
+    $(document).on('submit', formUpdate, updateUser);
+    $(document).on('click', btnFormDeleteConfirm, deleteUser);
+    $(document).on('submit', formAdd, addUser);
+
+
+    $(document).on("click", btnItemAdd, openAddForm);
+    $(document).on("click", btnFormAddClose, closeForm);
+
+
+    $(document).on("click", btnItemUpdate, openUpdateForm);
+    $(document).on('click', btnFormUpdateClose, closeForm);
+
+
+    $(document).on('click', btnItemDelete, openFormDelete);
+    $(document).on('click', btnFormDeleteCansel, closePopupDelete);
 
 
     $(document).ready(() => {
         let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
         cmdGetUsersData.done(renderTableNotes)
+                        .fail(renderErrorLoadTable);
     });
 
 
+
     ////////////// FUNCTIONS //////////////
+
     function renderTableNotes(data) {
-        let tableNotes = APP_TEMPLATES.getTableTPL(data);
+        let tableNotes = APP_TEMPLATES.getTplTable(data);
         $('table').remove();
-        $('.container').append(tableNotes);
+        $(appContainer).append(tableNotes);
     }
 
+    function renderErrorLoadTable(){
+
+    }
 
     function APP_AJAX(ajaxUrl, dataToServer) {
         return $.ajax({
@@ -68,11 +76,11 @@ $(function () {
         let dataToServer = formData + `&cmd=${cmd}`;
         let cmdAdd = APP_AJAX(ajaxUrl, dataToServer);
         cmdAdd.done(renderTableNotes);
-        closeForm(addFormBody, formContainer)
+        closeForm()
     }
 
     function deleteUser() {
-        let id = $(this).attr('id');
+        let id = $(this).attr(dataItemDeleteId);
         let cmd = 'delete_user';
         let dataToServer = `cmd=${cmd}&id=${id}`;
         let cmdDelete = APP_AJAX(ajaxUrl, dataToServer);
@@ -86,43 +94,40 @@ $(function () {
         let dataToServer = formData + `&cmd=${cmd}`;
         let cmdUpdate = APP_AJAX(ajaxUrl, dataToServer);
         cmdUpdate.done(renderTableNotes)
-        closeForm(updateFormBody, formContainer);
+        closeForm();
     }
+
 
     function closePopupDelete() {
-        $('.popup_delete').remove();
+        $(formDelete).remove();
     }
 
-    function openPopupDelete() {
-        let popupDelete = APP_TEMPLATES.getPopupDelete;
-        let id = $(this).parents('tr').attr('id');
-        let popupWrapper = '.popup_delete';
-        $('body').prepend('<div class="popup_delete"></div>');
-        $(popupWrapper).html(popupDelete);
-        setTimeout(() => {
-            $('.btn_delete_confirm').attr('id', id);
-        }, 100);
+    function openFormDelete() {
+        let popupDelete = APP_TEMPLATES.getTplFormDelete;
+        let id = $(this).attr(dataItemDeleteId);
+        $('.block_form').html(popupDelete);
+        console.log(id)
+        $(btnFormDeleteConfirm).attr(dataItemDeleteId, id);
+
     }
 
-    function closeUpdateForm() {
-        closeForm(updateFormBody, formContainer);
+    function initForm(){
+            validateForm();
+            setMask();
     }
 
     function openUpdateForm() {
-        let id = $(this).parents('tr').attr('id');
+        let id = $(this).attr(dataItemUpdateId);
         let cmd = 'open_update_form';
         let dataToServer = `cmd=${cmd}&id=${id}`;
         let cmdOpenUpdateForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenUpdateForm.done((data) => {
             let statuses = data['statuses'];
             let user = data['user'][0];
-            let form = APP_TEMPLATES.getFormUpdate(user, statuses);
-            openForm(updateFormBody, form);
+            let formTpl = APP_TEMPLATES.getTplFormUpdate(user, statuses);
+            openForm(formTpl);
+            initForm();
         });
-    }
-
-    function closeAddForm() {
-        closeForm(addFormBody, formContainer);
     }
 
     function openAddForm() {
@@ -130,30 +135,25 @@ $(function () {
         let cmdOpenAddForm = APP_AJAX(ajaxUrl, dataToServer);
         cmdOpenAddForm.done((data) => {
             let statuses = data['statuses'];
-            let form = APP_TEMPLATES.getFormAdd(statuses);
-            openForm(addFormBody, form);
+            let formTpl = APP_TEMPLATES.getTplFormAdd(statuses);
+            openForm(formTpl);
+            initForm();
         });
 
-
     }
 
-    function openForm(formBody, form) {
-        $('.block_form').html(form);
-        setTimeout(() => {
-            $(formBody).toggleClass('active');
-        }, 50);
+    function openForm(formTpl) {
+        $(formContainer).html(formTpl);
+        setTimeout(() => { $(formWrapper).toggleClass('active'); }, 50);
         $('html').css('overflow-y', 'hidden');
-        setTimeout(() => {
-            validateForm();
-            setMask();
-        }, 50);
+
     }
 
-    function closeForm(formBody, formContainer) {
-        $(formBody).toggleClass('active');
+    function closeForm() {
+        $(formWrapper).toggleClass('active');
         setTimeout(() => {
-            $(formContainer).remove();
-        }, 100);
+            $(formContainer).html('');
+        }, 200);
         $('html').css('overflow-y', 'visible');
     }
 

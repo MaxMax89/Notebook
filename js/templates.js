@@ -1,27 +1,31 @@
 let APP_TEMPLATES = (function () {
 
-    let getFormOptions = function (statuses){
+
+    let getFormOptions = function (statuses, currentStatus = false) {
         let itemHTML = `<option selected='true' disabled='disabled'>Выберете статус</option>`;
         $.each(statuses, (id, status) => {
             itemHTML += `<option name="status" value="${id}">${status}</option>`
         });
+
+
+        if (currentStatus !== false) {
+            setTimeout(() => {
+                $(`select option[value=${currentStatus}]`).prop('selected', true);
+            }, 100);
+        }
         return itemHTML;
     }
 
-    let getFormUpdate = function (user, statuses) {
-        let formOptions = getFormOptions(statuses);
+    let getTplFormUpdate = function (user, statuses) {
+        let formOptions = getFormOptions(statuses, user['id_status']);
 
-        setTimeout(() => {
-            $(`select option[value=${user['id_status']}]`).prop('selected', true);
-        }, 100);
-
-        return  `<div class="notebook_form_container">
-                                    <a class="link_form_close" id="link_update_form_close"></a>
-                                    <div class="notebook_form_body notebook_form_body_update">
-                                        <div class="notebook_form_header"><a class="notebook_form_close" id="link_update_form_close">
+        return `<div class="notebook_form_container">
+                                    <a class="link_form_close js_btn_form_update_close"></a>
+                                    <div class="notebook_form_body  js_form_wrapper">
+                                        <div class="notebook_form_header"><a class="notebook_form_close js_btn_form_update_close">
                                                 <img src="../../img/icon_close.svg" alt="">
                                             </a></div>
-                                        <form method="post" id="notebook_form_update" onsubmit="return false">
+                                        <form method="post" class="js_form_update" onsubmit="return false">
                                             <div class="mb-3">
                                                 <input type="hidden" name="id" value="${user.id}">
                                                 <input type="hidden" name="update_form" value="">
@@ -57,24 +61,24 @@ let APP_TEMPLATES = (function () {
                                             </div>
                                             <div class="notebook_form_links">
                                                 <button type="submit" class="btn btn-primary btn_form" name="add_user">СОХРАНИТЬ</button>
-                                                <a class="btn btn-primary btn_red" id="link_update_form_close">ЗАКРЫТЬ</a>
+                                                <a class="btn btn-primary btn_red js_btn_form_update_close">ЗАКРЫТЬ</a>
                                             </div>
                                         </form>
                                     </div>`;
 
     }
 
-    let getFormAdd = function(statuses) {
+    let getTplFormAdd = function (statuses) {
 
         let formOptions = getFormOptions(statuses);
 
         return `<div class="notebook_form_container">
-                                    <a class="link_form_close" id="link_add_form_close"></a>
-                                    <div class="notebook_form_body notebook_form_body_add">
-                                        <div class="notebook_form_header"><a class="notebook_form_close" id="link_add_form_close">
+                                    <a class="link_form_close js_btn_form_add_close" ></a>
+                                    <div class="notebook_form_body  js_form_wrapper">
+                                        <div class="notebook_form_header"><a class="notebook_form_close js_btn_form_add_close" >
                                                 <img src="../../img/icon_close.svg" alt="">
                                             </a></div>
-                                        <form method="post" class="notebook_form_add" id="notebook_form_add" onsubmit="return false">
+                                        <form method="post" class="notebook_form_add js_form_add"  onsubmit="return false">
                                             <div class="mb-3">
                                                 <input type="hidden" name="add_form" value="" class="form-control "
                                                        aria-describedby="emailHelp">
@@ -110,7 +114,7 @@ let APP_TEMPLATES = (function () {
                                             </div>
                                             <div class="notebook_form_links">
                                                 <button type="submit" class="btn btn-primary btn_form_save" name="add_user">СОХРАНИТЬ</button>
-                                                <a class="btn btn-primary btn_red" id="link_add_form_close">ЗАКРЫТЬ</a>
+                                                <a class="btn btn-primary btn_red js_btn_form_add_close">ЗАКРЫТЬ</a>
                                             </div>
                                         </form>
                                     </div>
@@ -118,18 +122,18 @@ let APP_TEMPLATES = (function () {
     }
 
 
-    let getPopupDelete = `<div class="popup_delete_confirm">
-                                        <a class="popup_form_close" id="popup_delete_close"></a>
+    let getTplFormDelete = `<div class="popup_delete_confirm js_form_delete">
+                                        <a class="popup_form_close js_btn_form_delete_cancel"></a>
                                         <div class="popup_delete_body">
                                             <h4 class="popup_delete_title">удалить заметку?</h4>
                                             <div class="popup_delete_links">
-                                                <a class="btn btn-primary btn_delete_cancel" id="popup_delete_close">ОТМЕНА</a>
-                                                <a class="btn btn-primary btn_red btn_delete_confirm">УДАЛИТЬ</a>
+                                                <a class="btn btn-primary btn_delete_cancel js_btn_form_delete_cancel" >ОТМЕНА</a>
+                                                <a class="btn btn-primary btn_red btn_delete_confirm js_btn_form_delete_confirm" data-item-delete-id="">УДАЛИТЬ</a>
                                             </div>
                                         </div>
                                     </div>`;
 
-    let getTableTPL = function (data) {
+    let getTplTable = function (data) {
         let itemHTML = `<table class="table align-middle mb-0 bg-white">
                     <thead class="bg-light">
                         <tr>
@@ -160,10 +164,10 @@ let APP_TEMPLATES = (function () {
                 <td id="phone" class="table_notes_td_phone">${item.phone}</td>
                 <td class="user_list_td_action">
                     <div class="user_list_linc_container">
-                        <a class=" btn btn-link btn-sm btn-rounded btn_update" id=""> 
+                        <a class=" btn btn-link btn-sm btn-rounded btn_update js_btn_item_update" data-item-update-id="${item.id}"> 
                             <img src="../img/update_user_icon.svg" alt="img">
                         </a>
-                        <a type="submit" class="btn btn-link btn-sm btn-rounded table_notes_btn_remove">
+                        <a type="submit" class="btn btn-link btn-sm btn-rounded table_notes_btn_remove js_btn_item_delete" data-item-delete-id="${item.id}">
                             <img src="../img/delete_user_icon.svg" class="table_notes_delete_icon" alt="">
                          </a>
                     </div>
@@ -175,10 +179,10 @@ let APP_TEMPLATES = (function () {
         return itemHTML;
     };
     return {
-        getTableTPL: getTableTPL,
-        getFormAdd: getFormAdd,
-        getFormUpdate: getFormUpdate,
-        getPopupDelete: getPopupDelete
+        getTplTable: getTplTable,
+        getTplFormAdd: getTplFormAdd,
+        getTplFormUpdate: getTplFormUpdate,
+        getTplFormDelete: getTplFormDelete
     };
 
 })();
