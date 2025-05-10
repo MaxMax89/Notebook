@@ -11,7 +11,6 @@ $(function () {
     let dataItemDeleteId        = 'data-item-delete-id';
     let dataItemUpdateId        = 'data-item-update-id';
 
-
     let formContainer           = '.js_form_container';
     let formWrapper             = '.js_form_wrapper';
     let formDelete              = '.js_form_delete';
@@ -22,24 +21,18 @@ $(function () {
     let appContainer            = '.js_app_container'
 
 
-
-
     $(document).on('submit', formUpdate, updateUser);
     $(document).on('click', btnFormDeleteConfirm, deleteUser);
     $(document).on('submit', formAdd, addUser);
 
-
     $(document).on("click", btnItemAdd, openAddForm);
     $(document).on("click", btnFormAddClose, closeForm);
-
 
     $(document).on("click", btnItemUpdate, openUpdateForm);
     $(document).on('click', btnFormUpdateClose, closeForm);
 
-
     $(document).on('click', btnItemDelete, openFormDelete);
     $(document).on('click', btnFormDeleteCansel, closePopupDelete);
-
 
     $(document).ready(() => {
         let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
@@ -93,8 +86,7 @@ $(function () {
         cmdUpdate.done(renderTableNotes)
         closeForm();
     }
-
-
+    
     function closePopupDelete() {
         $(formDelete).remove();
     }
