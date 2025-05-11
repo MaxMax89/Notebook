@@ -30,5 +30,3 @@ $DATA_TPL = $usersController->getDataUsers();
 
 
 
-
-

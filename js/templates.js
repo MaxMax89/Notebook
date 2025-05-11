@@ -1,12 +1,34 @@
 let APP_TEMPLATES = (function () {
 
 
+    let getTplBtnPagination = function (data, countItemsPage) {
+
+        let countPages = Math.ceil(data.length / 10);
+
+        let itemHTML = `<nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item disabled">
+              <a class="page-link js_btn_pagination_prev" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>`
+
+        for (let i = 1; i <= countPages; i++)  {
+            itemHTML += `<li class="page-item "><a class="page-link js_pagination_page" data-pagination-page="${i}" href="#">${i}</a></li>`
+        }
+
+        itemHTML += `<li>
+                        <a class="page-link js_btn_pagination_next" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>`;
+        return itemHTML;
+
+    }
+
     let getFormOptions = function (statuses, currentStatus = false) {
         let itemHTML = `<option selected='true' disabled='disabled'>Выберете статус</option>`;
         $.each(statuses, (id, status) => {
             itemHTML += `<option name="status" value="${id}">${status}</option>`
         });
-
 
         if (currentStatus !== false) {
             setTimeout(() => {
@@ -179,6 +201,7 @@ let APP_TEMPLATES = (function () {
         return itemHTML;
     };
     return {
+        getTplBtnPagination: getTplBtnPagination,
         getTplTable: getTplTable,
         getTplFormAdd: getTplFormAdd,
         getTplFormUpdate: getTplFormUpdate,

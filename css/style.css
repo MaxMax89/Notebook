@@ -236,3 +236,25 @@ label.error {
     background-color: #f0f0f0;
     border-color: #0000ff;
 }
+
+.pagination .page-item {
+    margin: 0 2px;
+}
+.pagination .page-item .page-link {
+    color: #000000;
+    background-color: #ffffff;
+    font-size: 13px;
+    padding: 5px;
+    border: 1px solid #000000;
+    transition: all 0.3s ease;
+}
+.pagination .page-item.active .page-link {
+    background-color: #ffffff;
+    border-color: #000000;
+    color: #eb1414;
+}
+.pagination .page-item .page-link:hover {
+    color: #0000ff;
+    background-color: #f0f0f0;
+    border-color: #0000ff;
+}

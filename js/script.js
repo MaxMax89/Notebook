@@ -1,5 +1,6 @@
 $(function () {
 
+    let itemsJSON                = [];
     let btnFormDeleteConfirm    = '.js_btn_form_delete_confirm';
     let btnFormDeleteCansel     = '.js_btn_form_delete_cancel';
     let btnItemDelete           = '.js_btn_item_delete';
@@ -7,9 +8,13 @@ $(function () {
     let btnItemAdd              = '.js_btn_item_add';
     let btnFormUpdateClose      = '.js_btn_form_update_close';
     let btnFormAddClose         = '.js_btn_form_add_close';
+    let btnPaginationNext       = '.js_btn_pagination_next';
+    let btnPaginationPrev       = '.js_btn_pagination_prev';
+    let btnPaginationPage       = '.js_pagination_page';
 
     let dataItemDeleteId        = 'data-item-delete-id';
     let dataItemUpdateId        = 'data-item-update-id';
+    let dataPaginationPage      = 'data-pagination-page';
 
     let formContainer           = '.js_form_container';
     let formWrapper             = '.js_form_wrapper';
@@ -18,9 +23,12 @@ $(function () {
     let formAdd                 = '.js_form_add';
 
     let ajaxUrl                 = 'ajax/handler.php';
-    let appContainer            = '.js_app_container'
+    let appContainer            = '.js_app_container';
 
+    let currentPage            = 1;
+    let countItemsPage         = 10;
 
+    $(document).on('click', btnPaginationPage, updatePagination)
     $(document).on('submit', formUpdate, updateUser);
     $(document).on('click', btnFormDeleteConfirm, deleteUser);
     $(document).on('submit', formAdd, addUser);
@@ -33,17 +41,43 @@ $(function () {
 
     $(document).on('click', btnItemDelete, openFormDelete);
     $(document).on('click', btnFormDeleteCansel, closePopupDelete);
+    $(document).ready(renderPage);
 
-    $(document).ready(() => {
-        let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
-        cmdGetUsersData.done(renderTableNotes);
-    });
+
 
 
 
     ////////////// FUNCTIONS //////////////
 
-    function renderTableNotes(data) {
+    function renderPage(){
+        let cmdGetUsersData = APP_AJAX(ajaxUrl, 'cmd=get_data_tpl');
+        cmdGetUsersData.done((data) => {
+            itemsJSON = data;
+            renderBtnPagination();
+            renderTableNotes();
+
+        });
+    }
+
+    function renderBtnPagination(){
+        let btnPagination = APP_TEMPLATES.getTplBtnPagination(itemsJSON);
+        $(appContainer).append(btnPagination);
+    }
+
+    function updatePagination(){
+        currentPage = $(this).attr(dataPaginationPage);
+        renderTableNotes();
+    }
+
+    function setPagination(items, currentPage, countItems){
+        let firstItem = countItems * currentPage - countItems;
+        let lastItem = firstItem + countItems;
+        return items.slice(firstItem, lastItem);
+    }
+
+    function renderTableNotes() {
+        let data = setPagination(itemsJSON, currentPage, countItemsPage);
+        console.log(data);
         let tableNotes = APP_TEMPLATES.getTplTable(data);
         $('table').remove();
         $(appContainer).append(tableNotes);
