@@ -76,7 +76,7 @@ td.table_notes_td_phone {
     transition: all 0.3s ease 0s;
 }
 
-.overlow_form {
+.overlay_form {
     position: fixed;
     top: 0;
     left: 0;
@@ -191,7 +191,7 @@ label.error {
     color: white;
 }
 
-.overlow_form_delete {
+.overlay_form_delete {
     width: 100%;
     height: 100%;
     position: absolute;

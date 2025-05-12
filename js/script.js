@@ -95,7 +95,6 @@ $(function () {
         let popupDelete = APP_TEMPLATES.getTplFormDelete;
         let id = $(this).attr(dataItemDeleteId);
         $('.block_form').html(popupDelete);
-        console.log(id)
         $(btnFormDeleteConfirm).attr(dataItemDeleteId, id);
 
     }

@@ -20,7 +20,7 @@ let APP_TEMPLATES = (function () {
         let formOptions = getFormOptions(statuses, user['id_status']);
 
         return `<div class="form_container">
-                                    <a class="overlow_form js_btn_form_update_close"></a>
+                                    <a class="overlay_form js_btn_form_update_close"></a>
                                     <div class="form_body  js_form_wrapper">
                                         <div class="form_header"><a class="notebook_form_close js_btn_form_update_close">
                                                 <img src="../../img/icon_close.svg" alt="">
@@ -73,7 +73,7 @@ let APP_TEMPLATES = (function () {
         let formOptions = getFormOptions(statuses);
 
         return `<div class="form_container">
-                                    <a class="overlow_form js_btn_form_add_close" ></a>
+                                    <a class="overlay_form js_btn_form_add_close" ></a>
                                     <div class="form_body  js_form_wrapper">
                                         <div class="form_header"><a class="notebook_form_close js_btn_form_add_close" >
                                                 <img src="../../img/icon_close.svg" alt="">
@@ -123,7 +123,7 @@ let APP_TEMPLATES = (function () {
 
 
     let getTplFormDelete = `<div class="form_delete js_form_delete">
-                                        <a class="overlow_form_delete js_btn_form_delete_cancel"></a>
+                                        <a class="overlay_form_delete js_btn_form_delete_cancel"></a>
                                         <div class="form_delete_body">
                                             <h4 class="form_delete_title">удалить заметку?</h4>
                                             <div class="form_delete_buttons">
